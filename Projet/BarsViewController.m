@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BarsViewController.h"
+#import "BarCell.h"
 
 @interface BarsViewController()
 {
@@ -43,6 +44,38 @@
     bars = [NSMutableArray array];
     tampon = [NSMutableArray array];
     
+    Bar *b = [[Bar alloc] init];
+    
+    b.nom = @"Spotilight";
+    b.infos = @"Trop cool";
+    b.address = @"Trop bien";
+    b.distance = 5.5;
+    [bars addObject:b];
+    
+    Bar *b1 = [[Bar alloc] init];
+
+    b1.nom = @"Plage";
+    b1.infos = @"Trop cool";
+    b1.address = @"Trop bien";
+    b1.distance = 3;
+    [bars addObject:b1];
+    
+    
+    Bar *b2 = [[Bar alloc] init];
+    b2.nom = @"L'irlandais";
+    b2.infos = @"Trop cool";
+    b2.address = @"Trop bien";
+    b2.distance = 2;
+    [bars addObject:b2];
+    
+    Bar *b3 = [[Bar alloc] init];
+    b3.nom = @"Razorback";
+    b3.infos = @"Trop cool";
+    b3.address = @"Trop bien";
+    b3.distance = 13.7;
+    [bars addObject:b3];
+    
+    /*
     [bars addObject:@"Spotlight"];
     [bars addObject:@"La plage"];
     [bars addObject:@"L'irlandais"];
@@ -53,7 +86,7 @@
     [bars addObject:@"Magazine"];
     [bars addObject:@"Privilège"];
     [bars addObject:@"L'eden"];
-    [bars addObject:@"Le Havre"];
+    [bars addObject:@"Le Havre"];*/
     [tampon addObjectsFromArray:bars];
     
     self.navigationItem.title = @"Bars";
@@ -70,17 +103,22 @@
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyIdentifier"];
     
     static NSString *CellIdentifier = @"MyIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    BarCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+              cell = [[BarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configuration de la cellule
-    NSString *cellValue = [bars objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellValue;
+    Bar *cellValue = [bars objectAtIndex:indexPath.row];
+    //self.BarNom.text = cellValue.nom;
+    cell.BarImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    cell.BarNom.text = cellValue.nom;
+    cell.BarDistance.text = [NSString stringWithFormat:@"%.2f km",cellValue.distance];
+    //cell.imageView.image = [UIImage imageNamed:@"bar_icon.jpg"];
     return cell;
 }
+
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
@@ -95,13 +133,13 @@
                 return;
               }
     
-      for(NSString *name in tampon2)
+      for(Bar *b in tampon2)
           {
-                NSRange r = [name rangeOfString:searchText];
+                NSRange r = [b.nom rangeOfString:searchText];
             if(r.location != NSNotFound)
                     {
                           if(r.location== 0)
-                                [bars addObject:name];
+                                [bars addObject:b];
                         }
               }
     }
@@ -111,7 +149,7 @@
     if([[segue identifier] isEqualToString:@"detailSegue"]){
         NSInteger selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
         BarViewController *bvc = [segue destinationViewController];
-        
+        bvc.bar = [bars objectAtIndex:selectedIndex];
     
     }
 }

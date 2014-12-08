@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *listBars;
 
+
 @end
 
 #endif

@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F31A34613F002514A1 /* bar_icon.jpg */; };
+		012B63F61A346148002514A1 /* bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F51A346148002514A1 /* bar.jpg */; };
 		015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015DFD0D1A33786400E600E1 /* BarViewController.m */; };
+		0175A6D21A346ED200C1D1CE /* BarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0175A6D11A346ED200C1D1CE /* BarCell.m */; };
+		0175A6D51A3487E800C1D1CE /* BarInfosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0175A6D41A3487E800C1D1CE /* BarInfosViewController.m */; };
 		018284851A2BC57300DEBB81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284841A2BC57300DEBB81 /* main.m */; };
 		018284881A2BC57300DEBB81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284871A2BC57300DEBB81 /* AppDelegate.m */; };
 		0182848B1A2BC57300DEBB81 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0182848A1A2BC57300DEBB81 /* FirstViewController.m */; };
@@ -31,8 +35,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		012B63F31A34613F002514A1 /* bar_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar_icon.jpg; sourceTree = "<group>"; };
+		012B63F51A346148002514A1 /* bar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar.jpg; sourceTree = "<group>"; };
 		015DFD0D1A33786400E600E1 /* BarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarViewController.m; sourceTree = "<group>"; };
 		015DFD101A33788F00E600E1 /* BarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarViewController.h; sourceTree = "<group>"; };
+		0175A6D01A346EC600C1D1CE /* BarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarCell.h; sourceTree = "<group>"; };
+		0175A6D11A346ED200C1D1CE /* BarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarCell.m; sourceTree = "<group>"; };
+		0175A6D31A3487D600C1D1CE /* BarInfosViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarInfosViewController.h; sourceTree = "<group>"; };
+		0175A6D41A3487E800C1D1CE /* BarInfosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarInfosViewController.m; sourceTree = "<group>"; };
 		0182847F1A2BC57300DEBB81 /* Projet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Projet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018284831A2BC57300DEBB81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		018284841A2BC57300DEBB81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -93,6 +103,8 @@
 		018284811A2BC57300DEBB81 /* Projet */ = {
 			isa = PBXGroup;
 			children = (
+				012B63F51A346148002514A1 /* bar.jpg */,
+				012B63F31A34613F002514A1 /* bar_icon.jpg */,
 				015DFD101A33788F00E600E1 /* BarViewController.h */,
 				015DFD0D1A33786400E600E1 /* BarViewController.m */,
 				018284861A2BC57300DEBB81 /* AppDelegate.h */,
@@ -100,6 +112,8 @@
 				018284891A2BC57300DEBB81 /* FirstViewController.h */,
 				0182848A1A2BC57300DEBB81 /* FirstViewController.m */,
 				0182848C1A2BC57300DEBB81 /* SecondViewController.h */,
+				0175A6D01A346EC600C1D1CE /* BarCell.h */,
+				0175A6D11A346ED200C1D1CE /* BarCell.m */,
 				0182848D1A2BC57300DEBB81 /* SecondViewController.m */,
 				0182848F1A2BC57300DEBB81 /* Main.storyboard */,
 				018284921A2BC57300DEBB81 /* Images.xcassets */,
@@ -108,6 +122,8 @@
 				018284AB1A2BC98000DEBB81 /* BarsViewController.h */,
 				018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */,
 				019092F11A2F68C3000664C8 /* Bar.h */,
+				0175A6D31A3487D600C1D1CE /* BarInfosViewController.h */,
+				0175A6D41A3487E800C1D1CE /* BarInfosViewController.m */,
 				019092F21A2F68D7000664C8 /* Bar.m */,
 			);
 			path = Projet;
@@ -219,6 +235,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */,
+				012B63F61A346148002514A1 /* bar.jpg in Resources */,
 				018284911A2BC57300DEBB81 /* Main.storyboard in Resources */,
 				018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */,
 				018284931A2BC57300DEBB81 /* Images.xcassets in Resources */,
@@ -240,12 +258,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0182848E1A2BC57300DEBB81 /* SecondViewController.m in Sources */,
+				0175A6D21A346ED200C1D1CE /* BarCell.m in Sources */,
 				018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */,
 				018284881A2BC57300DEBB81 /* AppDelegate.m in Sources */,
 				015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */,
 				019092F31A2F68D7000664C8 /* Bar.m in Sources */,
 				0182848B1A2BC57300DEBB81 /* FirstViewController.m in Sources */,
 				018284851A2BC57300DEBB81 /* main.m in Sources */,
+				0175A6D51A3487E800C1D1CE /* BarInfosViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

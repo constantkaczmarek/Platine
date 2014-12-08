@@ -16,6 +16,8 @@
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *infos;
 @property (nonatomic, retain) NSString *address;
+@property (nonatomic) double  distance;
+@property (nonatomic, retain) NSString *rating;
 
 @end
 

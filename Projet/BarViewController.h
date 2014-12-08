@@ -15,9 +15,10 @@
 @interface BarViewController : UIViewController
 
 @property (strong, nonatomic) Bar *bar;
-@property (weak, nonatomic) IBOutlet UIImageView *BarImage;
-@property (weak, nonatomic) IBOutlet UINavigationItem *Title;
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *Title;
+@property (weak, nonatomic) IBOutlet UIImageView *BarImage;
+@property (weak, nonatomic) IBOutlet UILabel *BarDistance;
 @end
 
 #endif
