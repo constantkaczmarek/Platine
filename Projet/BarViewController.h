@@ -10,15 +10,23 @@
 #define Projet_BarViewController_h
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "Bar.h"
 
-@interface BarViewController : UIViewController
+@interface BarViewController : UIViewController <CLLocationManagerDelegate,MKMapViewDelegate>
+{
+}
 
 @property (strong, nonatomic) Bar *bar;
 
+@property (weak, nonatomic) IBOutlet MKMapView *BarMap;
 @property (weak, nonatomic) IBOutlet UINavigationItem *Title;
 @property (weak, nonatomic) IBOutlet UIImageView *BarImage;
 @property (weak, nonatomic) IBOutlet UILabel *BarDistance;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
+
 @end
 
 #endif

@@ -12,6 +12,4 @@
 
 @implementation BarCell
 
-
-
 @end

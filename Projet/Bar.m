@@ -26,4 +26,22 @@
 
 }
 
+- (NSString *)title {
+    return self.nom;
+}
+
+- (NSString *)subtitle {
+    return [NSString stringWithFormat:@"infos : %@", self.infos];
+}
+
+- (CLLocationCoordinate2D)coordinate {
+    CLLocationCoordinate2D newCoordinate;
+    
+    newCoordinate.latitude = self.lat;
+    newCoordinate.longitude = self.lng;
+    
+    return newCoordinate;
+}
+
+
 @end

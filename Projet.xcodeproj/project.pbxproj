@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F31A34613F002514A1 /* bar_icon.jpg */; };
 		012B63F61A346148002514A1 /* bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F51A346148002514A1 /* bar.jpg */; };
+		015495DA1A364D710055F3D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BE12851A363BEF002E1502 /* MapKit.framework */; };
 		015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015DFD0D1A33786400E600E1 /* BarViewController.m */; };
 		0175A6D21A346ED200C1D1CE /* BarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0175A6D11A346ED200C1D1CE /* BarCell.m */; };
 		0175A6D51A3487E800C1D1CE /* BarInfosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0175A6D41A3487E800C1D1CE /* BarInfosViewController.m */; };
@@ -62,6 +63,7 @@
 		018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
 		019092F11A2F68C3000664C8 /* Bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
+		01BE12851A363BEF002E1502 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015495DA1A364D710055F3D5 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +88,7 @@
 		018284761A2BC57300DEBB81 = {
 			isa = PBXGroup;
 			children = (
+				01BE12851A363BEF002E1502 /* MapKit.framework */,
 				018284811A2BC57300DEBB81 /* Projet */,
 				0182849E1A2BC57300DEBB81 /* ProjetTests */,
 				018284801A2BC57300DEBB81 /* Products */,
@@ -122,9 +126,9 @@
 				018284AB1A2BC98000DEBB81 /* BarsViewController.h */,
 				018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */,
 				019092F11A2F68C3000664C8 /* Bar.h */,
+				019092F21A2F68D7000664C8 /* Bar.m */,
 				0175A6D31A3487D600C1D1CE /* BarInfosViewController.h */,
 				0175A6D41A3487E800C1D1CE /* BarInfosViewController.m */,
-				019092F21A2F68D7000664C8 /* Bar.m */,
 			);
 			path = Projet;
 			sourceTree = "<group>";
@@ -204,6 +208,11 @@
 				TargetAttributes = {
 					0182847E1A2BC57300DEBB81 = {
 						CreatedOnToolsVersion = 6.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					0182849A1A2BC57300DEBB81 = {
 						CreatedOnToolsVersion = 6.1;

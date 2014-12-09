@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BarCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *BarNom;
 @property (weak, nonatomic) IBOutlet UIImageView *BarImage;
 @property (weak, nonatomic) IBOutlet UILabel *BarDistance;

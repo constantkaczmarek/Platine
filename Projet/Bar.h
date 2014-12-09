@@ -10,14 +10,21 @@
 #define Projet_Bar_h
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface Bar : NSObject
+@interface Bar : NSObject <MKAnnotation>
 
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *infos;
 @property (nonatomic, retain) NSString *address;
-@property (nonatomic) double  distance;
 @property (nonatomic, retain) NSString *rating;
+
+
+@property (nonatomic) double  lat;
+@property (nonatomic) double  lng;
+
+-(void)initBiere;
+//-(void)getDistance;
 
 @end
 

@@ -49,7 +49,8 @@
     b.nom = @"Spotilight";
     b.infos = @"Trop cool";
     b.address = @"Trop bien";
-    b.distance = 5.5;
+    b.lat = 50.6353821;
+    b.lng = 3.0651736;
     [bars addObject:b];
     
     Bar *b1 = [[Bar alloc] init];
@@ -57,7 +58,6 @@
     b1.nom = @"Plage";
     b1.infos = @"Trop cool";
     b1.address = @"Trop bien";
-    b1.distance = 3;
     [bars addObject:b1];
     
     
@@ -65,14 +65,12 @@
     b2.nom = @"L'irlandais";
     b2.infos = @"Trop cool";
     b2.address = @"Trop bien";
-    b2.distance = 2;
     [bars addObject:b2];
     
     Bar *b3 = [[Bar alloc] init];
     b3.nom = @"Razorback";
     b3.infos = @"Trop cool";
     b3.address = @"Trop bien";
-    b3.distance = 13.7;
     [bars addObject:b3];
     
     /*
@@ -114,7 +112,7 @@
     //self.BarNom.text = cellValue.nom;
     cell.BarImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
     cell.BarNom.text = cellValue.nom;
-    cell.BarDistance.text = [NSString stringWithFormat:@"%.2f km",cellValue.distance];
+    cell.BarDistance.text = [NSString stringWithFormat:@"2 km"];
     //cell.imageView.image = [UIImage imageNamed:@"bar_icon.jpg"];
     return cell;
 }
