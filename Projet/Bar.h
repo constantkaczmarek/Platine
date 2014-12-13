@@ -13,6 +13,9 @@
 #import <MapKit/MapKit.h>
 
 @interface Bar : NSObject <MKAnnotation>
+{
+    double distance;
+}
 
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *infos;
@@ -23,8 +26,12 @@
 @property (nonatomic) double  lat;
 @property (nonatomic) double  lng;
 
--(void)initBiere;
-//-(void)getDistance;
+- (void)initBiere;
+- (double) getDistance;
+- (void) setDistance:(double)distance;
+
+-(void)calculDistance:(CLLocation *)start;
+//-(NSComparisonResult)compare:(Bar *)otherObject;
 
 @end
 

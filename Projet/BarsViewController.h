@@ -7,16 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "BarViewController.h"
 #import "Bar.h"
 
 #ifndef Projet_BarsViewController_h
 #define Projet_BarsViewController_h
 
-@interface BarsViewController : UITableViewController
+@interface BarsViewController : UITableViewController <CLLocationManagerDelegate,UISearchDisplayDelegate>
+{
+    CLLocationManager* locationManager;
+}
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *listBars;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
 @end

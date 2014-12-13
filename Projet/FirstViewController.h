@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UITableViewController <UISearchDisplayDelegate>
+
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UITableView *myTab;
 
 @end
 

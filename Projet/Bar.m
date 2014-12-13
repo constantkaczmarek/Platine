@@ -43,5 +43,27 @@
     return newCoordinate;
 }
 
+-(double)getDistance{
+    return distance;
+}
+
+
+-(void)setDistance:(double)_distance
+{
+    distance = _distance;
+}
+
+-(void)calculDistance:(CLLocation *)start{
+    
+    CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) self.lat) longitude:((CLLocationDegrees)self.lng)];
+    CLLocationDistance d = [barLocation distanceFromLocation:start];
+    distance = d;
+}
+
+/*-(NSComparisonResult)compare:(Bar *)otherObject{
+    return [self.getDistance compare:otherObject.get];
+}*/
+
+
 
 @end

@@ -23,6 +23,7 @@
 		018284A21A2BC57300DEBB81 /* ProjetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284A11A2BC57300DEBB81 /* ProjetTests.m */; };
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
+		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
 		019092F11A2F68C3000664C8 /* Bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
+		0198F1311A38DC2B001A6FFB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		01BE12851A363BEF002E1502 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */,
 				015495DA1A364D710055F3D5 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +91,7 @@
 		018284761A2BC57300DEBB81 = {
 			isa = PBXGroup;
 			children = (
+				0198F1311A38DC2B001A6FFB /* UIKit.framework */,
 				01BE12851A363BEF002E1502 /* MapKit.framework */,
 				018284811A2BC57300DEBB81 /* Projet */,
 				0182849E1A2BC57300DEBB81 /* ProjetTests */,
@@ -109,22 +113,22 @@
 			children = (
 				012B63F51A346148002514A1 /* bar.jpg */,
 				012B63F31A34613F002514A1 /* bar_icon.jpg */,
-				015DFD101A33788F00E600E1 /* BarViewController.h */,
-				015DFD0D1A33786400E600E1 /* BarViewController.m */,
 				018284861A2BC57300DEBB81 /* AppDelegate.h */,
 				018284871A2BC57300DEBB81 /* AppDelegate.m */,
 				018284891A2BC57300DEBB81 /* FirstViewController.h */,
-				0182848A1A2BC57300DEBB81 /* FirstViewController.m */,
+				0182848F1A2BC57300DEBB81 /* Main.storyboard */,
 				0182848C1A2BC57300DEBB81 /* SecondViewController.h */,
 				0175A6D01A346EC600C1D1CE /* BarCell.h */,
 				0175A6D11A346ED200C1D1CE /* BarCell.m */,
 				0182848D1A2BC57300DEBB81 /* SecondViewController.m */,
-				0182848F1A2BC57300DEBB81 /* Main.storyboard */,
 				018284921A2BC57300DEBB81 /* Images.xcassets */,
 				018284941A2BC57300DEBB81 /* LaunchScreen.xib */,
 				018284821A2BC57300DEBB81 /* Supporting Files */,
 				018284AB1A2BC98000DEBB81 /* BarsViewController.h */,
+				0182848A1A2BC57300DEBB81 /* FirstViewController.m */,
 				018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */,
+				015DFD101A33788F00E600E1 /* BarViewController.h */,
+				015DFD0D1A33786400E600E1 /* BarViewController.m */,
 				019092F11A2F68C3000664C8 /* Bar.h */,
 				019092F21A2F68D7000664C8 /* Bar.m */,
 				0175A6D31A3487D600C1D1CE /* BarInfosViewController.h */,
@@ -399,6 +403,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Projet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -409,6 +414,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Projet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

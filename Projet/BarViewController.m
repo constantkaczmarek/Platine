@@ -38,7 +38,8 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-
+    
+    //Calcul de la distance
     CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) self.bar.lat) longitude:((CLLocationDegrees)self.bar.lng)];
     CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
     CLLocationDistance distance = [startLocation distanceFromLocation:endLocation];
@@ -57,6 +58,7 @@
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
     self.locationManager = locations.lastObject;
+    NSLog(@"trop cool");
 
 }
 
