@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSString *infos;
 @property (nonatomic, retain) NSString *address;
 @property (nonatomic, retain) NSString *rating;
+@property (nonatomic, retain) NSArray *type;
 
 
 @property (nonatomic) double  lat;

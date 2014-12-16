@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RestKit/RestKit.h>
 #import "BarsViewController.h"
 #import "BarCell.h"
 

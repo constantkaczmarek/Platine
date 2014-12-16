@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>93ED0C70-BFF9-40A6-ACC5-999C4DABC036</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Projet</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0731E3C527F107C292739ECBFFC7BC58B9FB5B6E</key>
+		<string>https://github.com/constantkaczmarek/Platine.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Projet.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0731E3C527F107C292739ECBFFC7BC58B9FB5B6E</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/constantkaczmarek/Platine.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0731E3C527F107C292739ECBFFC7BC58B9FB5B6E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0731E3C527F107C292739ECBFFC7BC58B9FB5B6E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Platine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

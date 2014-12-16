@@ -9,6 +9,7 @@
 #ifndef Projet_BarInfosViewController_h
 #define Projet_BarInfosViewController_h
 
+
 #import <UIKit/UIKit.h>
 
 @interface BarInfosViewController : UIViewController
