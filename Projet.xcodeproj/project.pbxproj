@@ -24,6 +24,8 @@
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
 		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
+		EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E41A4035F8006F63D7 /* Beer.m */; };
+		EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E61A4035F8006F63D7 /* BeersViewController.m */; };
 		F7F9A9549347897B29BBE8B0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498BC474FF25960E63AB2A57 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +72,10 @@
 		498BC474FF25960E63AB2A57 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEEA86BDB14D64EAF8CBF4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DFB6789FA62DCB6655CF1FA0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF88F5E31A4035F8006F63D7 /* Beer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beer.h; sourceTree = "<group>"; };
+		EF88F5E41A4035F8006F63D7 /* Beer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beer.m; sourceTree = "<group>"; };
+		EF88F5E51A4035F8006F63D7 /* BeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeersViewController.h; sourceTree = "<group>"; };
+		EF88F5E61A4035F8006F63D7 /* BeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeersViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +124,10 @@
 		018284811A2BC57300DEBB81 /* Projet */ = {
 			isa = PBXGroup;
 			children = (
+				EF88F5E31A4035F8006F63D7 /* Beer.h */,
+				EF88F5E41A4035F8006F63D7 /* Beer.m */,
+				EF88F5E51A4035F8006F63D7 /* BeersViewController.h */,
+				EF88F5E61A4035F8006F63D7 /* BeersViewController.m */,
 				012B63F51A346148002514A1 /* bar.jpg */,
 				012B63F31A34613F002514A1 /* bar_icon.jpg */,
 				018284861A2BC57300DEBB81 /* AppDelegate.h */,
@@ -334,6 +344,8 @@
 				011C50851A3DEB09007F4563 /* RKTweet.m in Sources */,
 				010E03651A3DF281001514C7 /* Venue.m in Sources */,
 				018284881A2BC57300DEBB81 /* AppDelegate.m in Sources */,
+				EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */,
+				EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */,
 				015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */,
 				019092F31A2F68D7000664C8 /* Bar.m in Sources */,
 				018284851A2BC57300DEBB81 /* main.m in Sources */,
