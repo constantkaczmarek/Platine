@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *Title;
 @property (weak, nonatomic) IBOutlet UIImageView *BarImage;
 @property (weak, nonatomic) IBOutlet UILabel *BarDistance;
+@property (weak, nonatomic) IBOutlet UILabel *BarAdress;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 

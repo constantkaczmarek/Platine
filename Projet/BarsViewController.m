@@ -10,6 +10,8 @@
 #import <RestKit/RestKit.h>
 #import "BarsViewController.h"
 #import "BarCell.h"
+#define kKey @"AIzaSyCw-xTK5uQbecItdG-rQf9TuwPsYSPqjDY"
+
 
 @interface BarsViewController()
 {
@@ -17,6 +19,8 @@
     NSMutableArray *sortedBars;
     NSMutableArray *searchResults;
     CLLocationCoordinate2D currentLocalisation;
+    CLLocation *currentLocation;
+    NSArray *_bars;
 }
 
 @end
@@ -43,7 +47,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    bars = [NSMutableArray array];
     
     //Geolocalisation
     locationManager = [[CLLocationManager alloc] init];
@@ -54,80 +57,27 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         [locationManager startUpdatingLocation];
+        currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
+        //NSLog(@"ca marche");
+        
+        [self configureRestKit];
+        [self loadBars];
     }
 
-    
-    Bar *b = [[Bar alloc] init];
-    
-    b.nom = @"Spotilight";
-    b.infos = @"Trop cool";
-    b.address = @"Trop bien";
-    b.lat = 50.6353821;
-    b.lng = 3.0651736;
-    [b calculDistance:locationManager.location];
-    [bars addObject:b];
-    
-    Bar *b1 = [[Bar alloc] init];
-
-    b1.nom = @"Plage";
-    b1.infos = @"Trop cool";
-    b1.address = @"Trop bien la plage";
-    b1.lat = 50.6346472;
-    b1.lng = 3.0646157;
-    [b1 calculDistance:locationManager.location];
-    [bars addObject:b1];
-    
-    
-    Bar *b2 = [[Bar alloc] init];
-    b2.nom = @"L'irlandais";
-    b2.infos = @"Trop cool";
-    b2.address = @"Trop bien l'irlandais";
-    b2.lat = 50.6361987;
-    b2.lng = 3.0654311;
-    [b2 calculDistance:locationManager.location];
-    [bars addObject:b2];
-    
-    Bar *b3 = [[Bar alloc] init];
-    b3.nom = @"Razorback";
-    b3.infos = @"Trop cool";
-    b3.address = @"Trop bien l'irlandais";
-    b3.lat = 50.6371241;
-    b3.lng = 3.0658173;
-    [b3 calculDistance:locationManager.location];
-    [bars addObject:b3];
-    
-    /*
-    [bars addObject:@"Spotlight"];
-    [bars addObject:@"La plage"];
-    [bars addObject:@"L'irlandais"];
-    [bars addObject:@"Scotland"];
-    [bars addObject:@"Razorback"];
-    [bars addObject:@"Tchouka"];
-    [bars addObject:@"SMILE"];
-     
-    [bars addObject:@"Magazine"];
-    [bars addObject:@"Privilège"];
-    [bars addObject:@"L'eden"];
-    [bars addObject:@"Le Havre"];*/
-    
-    
-    NSArray *descriptor = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]];
-    NSArray *sortedBar = [bars sortedArrayUsingDescriptors:descriptor];
-
-    sortedBars = [NSMutableArray array];
-    [sortedBars addObjectsFromArray:sortedBar];
-
-    
     self.navigationItem.title = @"Bars";
     
    }
+
+
+#pragma mark - Configuration de la table view
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(tableView == self.searchDisplayController.searchResultsTableView) {
         return searchResults.count;
     } else {
-        return sortedBars.count;
+        return _bars.count;
     }
 }
 
@@ -136,25 +86,50 @@
     BarCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyIdentifier" forIndexPath:indexPath];
 
     // Configuration de la cellule
-    
     Bar *bar = nil;
     
+
     if (tableView == self.searchDisplayController.searchResultsTableView){
         bar = [searchResults objectAtIndex:indexPath.row];
     }
     else {
-        bar = [sortedBars objectAtIndex:indexPath.row];
+        bar = [_bars objectAtIndex:indexPath.row];
     }
-   
-    cell.BarImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    
+    /*dispatch_async(dispatch_get_global_queue(0,0), ^{
+        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: bar.icon]];
+        if ( data == nil )
+            return;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.BarImage.image = [UIImage imageWithData: data];
+        });
+    });*/
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: bar.icon]];
+        if ( bar.photo == nil ){
+            if ( data == nil )
+                return;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.BarImage.image = [UIImage imageWithData: data];
+            });
+            }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadPhoto:bar :cell];
+        });
+    });
+    
     cell.BarNom.text = bar.nom;
     cell.BarDistance.text = [NSString stringWithFormat:@"%.0f m",bar.getDistance];
     
     return cell;
 }
 
+
+#pragma mark - Configuration de la recherche dans la table view
+
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
-    searchResults = [sortedBars copy];
+    searchResults = [_bars copy];
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
@@ -167,13 +142,13 @@
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nom contains[c] %@", searchString];
-    searchResults = [NSMutableArray arrayWithArray:[sortedBars filteredArrayUsingPredicate:predicate]];
+    searchResults = [NSMutableArray arrayWithArray:[_bars filteredArrayUsingPredicate:predicate]];
    
     return YES;
 }
 
+#pragma mark - Configuration de la géolocalistion
 
-//Géolocalisation
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [locationManager requestAlwaysAuthorization];
@@ -181,17 +156,117 @@
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [locationManager startUpdatingLocation];
     locationManager = locations.lastObject;
+
+}
+
+- (void)sortBarsByDistance
+{
+    
+    for (Bar* b in _bars) {
+        
+        CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) b.lat) longitude:((CLLocationDegrees)b.lng)];
+        CLLocationDistance d = [barLocation distanceFromLocation:currentLocation];
+        b.distance = d;
+    }
+    
+    NSArray *descriptor = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]];
+    _bars = [_bars sortedArrayUsingDescriptors:descriptor];
+    
+    [self.tableView reloadData];
+}
+
+
+#pragma mark - Configuration des requêtes REST
+
+
+- (void)configureRestKit
+{
+    // initialize AFNetworking HTTPClient
+    NSURL *baseURL = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    
+    // initialize RestKit
+    RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    
+    // setup object mappings
+    RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
+    [barMapping addAttributeMappingsFromDictionary:@{
+                                                     @"place_id": @"id",
+                                                     @"name": @"nom",
+                                                     @"icon": @"icon",
+                                                     @"types": @"type",
+                                                     @"geometry.location.lat": @"lat",
+                                                     @"geometry.location.lng": @"lng",
+                                                     @"photos.photo_reference": @"photo",
+                                                     }];
+    
+    // register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:barMapping
+                                                                                            method:RKRequestMethodGET
+                                                                                       pathPattern:@"nearbysearch/json"
+                                                                                           keyPath:@"results"
+                                                                                       statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+    [objectManager addResponseDescriptor:responseDescriptor];
+}
+
+- (void)loadBars
+{
+    
+    NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
+    NSString *key = kKey;
+    
+    
+    NSDictionary *queryParams = @{@"location" : loc,
+                                  @"radius" : @"500",
+                                  @"types" : @"bar",
+                                  //@"name" : @"Lille",
+                                  @"key" : key};
+    
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath: @"nearbysearch/json"
+                                           parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  _bars = mappingResult.array;
+                                                  [self sortBarsByDistance];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"What do you mean by 'there is no bar?': %@", error);
+                                              }];
+
+}
+
+- (void)loadPhoto:(Bar *)bar:(BarCell *)barcell
+{
+    
+    NSString *maxwith= @"150";
+    
+    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,bar.photo.firstObject,kKey];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
+                                                                              imageProcessingBlock:nil
+                                                                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                                                               barcell.BarImage.image = image;
+                                                                                               
+                                                                                           } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                               NSLog(@"%@", [error localizedDescription]);
+                                                                                           }];
+    
+    [operation start];
     
 }
+
+#pragma mark - Transmission du bar
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([[segue identifier] isEqualToString:@"detailSegue"]){
         NSInteger selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
         BarViewController *bvc = [segue destinationViewController];
-        bvc.bar = [sortedBars objectAtIndex:selectedIndex];
+        bvc.bar = [_bars objectAtIndex:selectedIndex];
     }
 }
-
 
 @end

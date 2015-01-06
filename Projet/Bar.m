@@ -16,6 +16,7 @@
 @end
 
 @implementation Bar
+@synthesize distance;
 
 -(void)initBiere{
     
@@ -48,10 +49,6 @@
 }
 
 
--(void)setDistance:(double)_distance
-{
-    distance = _distance;
-}
 
 -(void)calculDistance:(CLLocation *)start{
     

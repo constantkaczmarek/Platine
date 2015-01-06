@@ -17,11 +17,16 @@
     double distance;
 }
 
+@property (nonatomic, retain) NSString *id;
 @property (nonatomic, retain) NSString *nom;
+@property (nonatomic, retain) NSString *icon;
 @property (nonatomic, retain) NSString *infos;
 @property (nonatomic, retain) NSString *address;
+@property (nonatomic, retain) NSString *tel;
 @property (nonatomic, retain) NSString *rating;
 @property (nonatomic, retain) NSArray *type;
+@property (nonatomic, retain) NSArray *photo;
+@property (nonatomic) double distance;
 
 
 @property (nonatomic) double  lat;

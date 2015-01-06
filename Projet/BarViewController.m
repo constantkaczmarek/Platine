@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RestKit/RestKit.h>
+#import <RKRequestDescriptor.h>
 #import "BarViewController.h"
 #import "BarInfosViewController.h"
 #import "Bar.h"
+#define kKey @"AIzaSyCw-xTK5uQbecItdG-rQf9TuwPsYSPqjDY"
+
 
 @implementation BarViewController
 @synthesize bar;
@@ -23,16 +27,21 @@
     self.BarImage.image = [UIImage imageNamed:@"bar.jpg"];
     self.BarMap.delegate = self;
     
+    [self loadPhoto];
+
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     // Autorisation
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
+    
+    [self configureRestKit];
+    [self loadBar];
 
     [self.BarMap addAnnotation:self.bar];
     //[self.BarMap showAnnotations:@[self.bar] animated:YES];
-    
+
     
 }
 
@@ -44,7 +53,8 @@
     CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
     CLLocationDistance distance = [startLocation distanceFromLocation:endLocation];
 
-    self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",distance];
+    self.bar.distance = distance;
+    self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",self.bar.distance];
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
     [self.BarMap setRegion:[self.BarMap regionThatFits:region] animated:YES];
@@ -58,7 +68,6 @@
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
     self.locationManager = locations.lastObject;
-    NSLog(@"trop cool");
 
 }
 
@@ -70,31 +79,77 @@
     }
 }
 
-/*- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)aUserLocation {
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.005;
-    span.longitudeDelta = 0.005;
-    CLLocationCoordinate2D location;
-    location.latitude = aUserLocation.coordinate.latitude;
-    location.longitude = aUserLocation.coordinate.longitude;
-    region.span = span;
-    region.center = location;
-    [mapView setRegion:region animated:YES];
-}
-*/
 
+#pragma mark - Configuration des requêtes REST
 
-/*
-- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
-
+- (void)configureRestKit
 {
-    MKAnnotationView *annotationView = [views objectAtIndex:0];
-    id<MKAnnotation> mp = [annotationView annotation];
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([mp coordinate] ,250,250);
-    [mv setRegion:region animated:YES];
-}*/
+    // setup object mappings
+    RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
+    [barMapping addAttributeMappingsFromDictionary:@{
+                                                     @"id": @"id",
+                                                     @"name": @"nom",
+                                                     @"icon": @"icon",
+                                                     @"photos": @"photo",
+                                                     //@"types": @"type",
+                                                     @"formatted_address": @"address",
+                                                     @"formatted_phone_number": @"tel",
+                                                     @"geometry.location.lat": @"lat",
+                                                     @"geometry.location.lng": @"lng",
+                                                     
+                                                     }];
+    
+    // register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:barMapping
+                                                                                            method:RKRequestMethodGET
+                                                                                       pathPattern:@"details/json"
+                                                                                           keyPath:@"result"
+                                                                                       statusCodes:[NSIndexSet indexSetWithIndex:200]];
 
+
+    [[RKObjectManager sharedManager] addResponseDescriptor:responseDescriptor];
+}
+
+- (void)loadBar
+{
+
+    NSString *key = kKey;
+    NSDictionary *queryParams = @{@"placeid" : self.bar.id,
+                                  @"key" : key};
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath: @"details/json"
+                                           parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  self.bar = mappingResult.firstObject;
+                                                  self.BarAdress.text = self.bar.address;
+
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"What do you mean by 'there is no bar?': %@", error);
+                                              }];
+}
+
+
+- (void)loadPhoto
+{
+ 
+    NSString *maxwith= @"400";
+    
+    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,self.bar.photo.firstObject,kKey];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
+                                                                              imageProcessingBlock:nil
+                                                                            success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                                                self.BarImage.image = image;
+                                                                                
+                                                                            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                NSLog(@"%@", [error localizedDescription]);
+                                                                            }];
+    
+    [operation start];
+
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
@@ -104,5 +159,7 @@
         
     }
 }
+
+
 
 @end
