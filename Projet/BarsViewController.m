@@ -52,13 +52,14 @@
     locationManager = [[CLLocationManager alloc] init];
     // Autorisation
     if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+
         [locationManager requestWhenInUseAuthorization];
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         [locationManager startUpdatingLocation];
         currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
-        //NSLog(@"ca marche");
+        NSLog([NSString stringWithFormat:@"%f ca marche",locationManager.location.coordinate.latitude]);
         
         [self configureRestKit];
         [self loadBars];
@@ -156,6 +157,9 @@
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [locationManager startUpdatingLocation];
     locationManager = locations.lastObject;
+    if(locationManager == nil){
+        [locationManager startUpdatingLocation];
+    }
 
 }
 

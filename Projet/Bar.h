@@ -13,9 +13,6 @@
 #import <MapKit/MapKit.h>
 
 @interface Bar : NSObject <MKAnnotation>
-{
-    double distance;
-}
 
 @property (nonatomic, retain) NSString *id;
 @property (nonatomic, retain) NSString *nom;
@@ -23,9 +20,14 @@
 @property (nonatomic, retain) NSString *infos;
 @property (nonatomic, retain) NSString *address;
 @property (nonatomic, retain) NSString *tel;
+@property (nonatomic, retain) NSString *site;
 @property (nonatomic, retain) NSString *rating;
+@property (nonatomic, retain) NSString *nbrating;
+@property (nonatomic, retain) NSString *test;
 @property (nonatomic, retain) NSArray *type;
 @property (nonatomic, retain) NSArray *photo;
+@property (nonatomic,retain) NSArray *events;
+@property (nonatomic,retain) NSArray *avis;
 @property (nonatomic) double distance;
 
 

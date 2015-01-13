@@ -21,10 +21,12 @@
 @property (strong, nonatomic) Bar *bar;
 
 @property (weak, nonatomic) IBOutlet MKMapView *BarMap;
+@property (weak, nonatomic) IBOutlet UILabel *BarDistance;
+@property (weak, nonatomic) IBOutlet UILabel *BarAdresse;
+@property (weak, nonatomic) IBOutlet UILabel *BarTel;
 @property (weak, nonatomic) IBOutlet UINavigationItem *Title;
 @property (weak, nonatomic) IBOutlet UIImageView *BarImage;
-@property (weak, nonatomic) IBOutlet UILabel *BarDistance;
-@property (weak, nonatomic) IBOutlet UILabel *BarAdress;
+@property (weak, nonatomic) IBOutlet UILabel *BarRating;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 

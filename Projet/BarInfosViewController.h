@@ -11,11 +11,15 @@
 
 
 #import <UIKit/UIKit.h>
+#import "Bar.h"
 
-@interface BarInfosViewController : UIViewController
+@interface BarInfosViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, retain) NSString *infos;
-@property (weak, nonatomic) IBOutlet UILabel *BarInfos;
+@property (nonatomic, retain) Bar *bar;
+
+@property (weak, nonatomic) IBOutlet UILabel *BarTel;
+@property (weak, nonatomic) IBOutlet UILabel *BarAdress;
+@property (weak, nonatomic) IBOutlet UITableView *BarEvents;
 
 
 @end

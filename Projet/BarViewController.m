@@ -11,7 +11,11 @@
 #import <RKRequestDescriptor.h>
 #import "BarViewController.h"
 #import "BarInfosViewController.h"
+#import "BarAvisController.h"
+#import "MapViewController.h"
 #import "Bar.h"
+#import "Event.h"
+#import "Avis.h"
 #define kKey @"AIzaSyCw-xTK5uQbecItdG-rQf9TuwPsYSPqjDY"
 
 
@@ -26,6 +30,8 @@
     self.Title.title = self.bar.nom;
     self.BarImage.image = [UIImage imageNamed:@"bar.jpg"];
     self.BarMap.delegate = self;
+    self.BarDistance.text = [NSString stringWithFormat:@"%.0f m",self.bar.distance];
+    
     
     [self loadPhoto];
 
@@ -54,6 +60,7 @@
     CLLocationDistance distance = [startLocation distanceFromLocation:endLocation];
 
     self.bar.distance = distance;
+    NSLog([NSString stringWithFormat:@"%f ahahha",self.bar.distance]);
     self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",self.bar.distance];
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
@@ -68,12 +75,11 @@
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
     self.locationManager = locations.lastObject;
-
 }
 
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-
+    
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self.BarMap setShowsUserLocation:YES];
     }
@@ -86,6 +92,8 @@
 {
     // setup object mappings
     RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
+    RKObjectMapping *avisMapping = [RKObjectMapping mappingForClass:[Avis class]];
+    
     [barMapping addAttributeMappingsFromDictionary:@{
                                                      @"id": @"id",
                                                      @"name": @"nom",
@@ -96,8 +104,22 @@
                                                      @"formatted_phone_number": @"tel",
                                                      @"geometry.location.lat": @"lat",
                                                      @"geometry.location.lng": @"lng",
-                                                     
+                                                     @"user_ratings_total": @"nbrating",
+                                                     @"rating":@"rating",
+                                                     @"reviews":@"avis",
                                                      }];
+    
+    /*[avisMapping addAttributeMappingsFromDictionary:@{
+                                                      @"author_name":@"auteur",
+                                                      @"rating": @"rating",
+                                                      @"text":@"text",
+                                                      @"time":@"time",
+                                                      }];
+    
+    [barMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"reviews"
+                                                                                   toKeyPath:@"reviews"
+                                                                                 withMapping:avisMapping]];*/
+    
     
     // register mappings with the provider using a response descriptor
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:barMapping
@@ -121,8 +143,8 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.bar = mappingResult.firstObject;
-                                                  self.BarAdress.text = self.bar.address;
-
+                                                  self.BarRating.text =  [NSString stringWithFormat:@"%@ sur %@ avis",self.bar.rating,self.bar.nbrating];
+                                               
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no bar?': %@", error);
@@ -155,8 +177,15 @@
     
     if([[segue identifier] isEqualToString:@"barInfosSegue"]){
         BarInfosViewController *bivc = [segue destinationViewController];
-        bivc.infos = self.bar.infos;
-        
+        bivc.bar = self.bar;
+    }
+    else if([[segue identifier] isEqualToString:@"barAvisSegue"]){
+        BarAvisController *bac = [segue destinationViewController];
+        bac.bar = self.bar;
+    }
+    else if([[segue identifier] isEqualToString:@"mapSegue"]){
+        MapViewController *mp = [segue destinationViewController];
+        mp.bar = self.bar;
     }
 }
 
