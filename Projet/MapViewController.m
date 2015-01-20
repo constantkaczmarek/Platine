@@ -20,6 +20,9 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
+    
+    [self.BarMap addAnnotation:self.bar];
+    [self.BarMap showAnnotations:@[self.bar] animated:YES];
 
 }
 
@@ -45,7 +48,7 @@
     self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",self.bar.distance];*/
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
-    [mapView setRegion:[mapView regionThatFits:region] animated:YES];
+    [self.BarMap setRegion:[mapView regionThatFits:region] animated:YES];
     
 }
 

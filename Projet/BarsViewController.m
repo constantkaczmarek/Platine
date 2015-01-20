@@ -10,7 +10,7 @@
 #import <RestKit/RestKit.h>
 #import "BarsViewController.h"
 #import "BarCell.h"
-#define kKey @"AIzaSyCw-xTK5uQbecItdG-rQf9TuwPsYSPqjDY"
+#define kKey @"AIzaSyCiKxji5wKw7RDAzKcIWDzTl2eqDv7ilfY"
 
 
 @interface BarsViewController()
@@ -18,7 +18,6 @@
     NSMutableArray *bars;
     NSMutableArray *sortedBars;
     NSMutableArray *searchResults;
-    CLLocationCoordinate2D currentLocalisation;
     CLLocation *currentLocation;
     NSArray *_bars;
 }
@@ -49,25 +48,33 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     //Geolocalisation
+    [self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
-    // Autorisation
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+    
+    
+    if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
 
-        [locationManager requestWhenInUseAuthorization];
+        [locationManager requestAlwaysAuthorization];
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         [locationManager startUpdatingLocation];
         currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
-        NSLog([NSString stringWithFormat:@"%f ca marche",locationManager.location.coordinate.latitude]);
-        
-        [self configureRestKit];
-        [self loadBars];
     }
 
     self.navigationItem.title = @"Bars";
+    [self loadBars];
     
-   }
+    self.refreshBar.target = self;
+    self.refreshBar.action = @selector(refresh:);
+
+}
+
+
+- (IBAction)refresh:(id)sender{
+    [self viewDidLoad];
+    
+}
 
 
 #pragma mark - Configuration de la table view
@@ -84,11 +91,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     BarCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyIdentifier" forIndexPath:indexPath];
 
     // Configuration de la cellule
     Bar *bar = nil;
-    
 
     if (tableView == self.searchDisplayController.searchResultsTableView){
         bar = [searchResults objectAtIndex:indexPath.row];
@@ -218,6 +225,7 @@
 {
     
     NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
+    //NSString *loc = [NSString stringWithFormat:@"%f,%f",50.6353821,3.0651736];
     NSString *key = kKey;
     
     
@@ -227,6 +235,7 @@
                                   //@"name" : @"Lille",
                                   @"key" : key};
     
+    //méthode asynchrone à cet endroit la
     
     [[RKObjectManager sharedManager] getObjectsAtPath: @"nearbysearch/json"
                                            parameters:queryParams
@@ -272,5 +281,6 @@
         bvc.bar = [_bars objectAtIndex:selectedIndex];
     }
 }
+
 
 @end

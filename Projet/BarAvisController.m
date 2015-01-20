@@ -36,7 +36,6 @@
     cell.AvisAuteur.text = avis[@"author_name"];
     cell.AvisText.text = avis[@"text"];
     cell.AvisRating.text = [NSString stringWithFormat:@"%@",avis[@"rating"]];
-    //cell.AvisTime.text = avis[@"time"];
     
     return cell;
 

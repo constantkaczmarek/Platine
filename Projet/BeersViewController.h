@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "Beer.h"
+#import "Bar.h"
 #ifndef Projet_BeersViewController_h
 #define Projet_BeersViewController_h
+extern const char keyAlert;
 
-@interface BeersViewController : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *beersList;
+@interface BeersViewController : UITableViewController <UISearchDisplayDelegate>
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (nonatomic) bool *AddingBeer;
+@property (retain, nonatomic) Bar *bar;
+@property (strong, nonatomic) IBOutlet UITableView *BeersList;
+@property (weak, nonatomic) IBOutlet UISearchBar *BeerSearch;
 
 @end
 

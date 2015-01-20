@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *listBars;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBar;
 
 
 @end

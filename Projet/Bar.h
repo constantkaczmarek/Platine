@@ -15,6 +15,7 @@
 @interface Bar : NSObject <MKAnnotation>
 
 @property (nonatomic, retain) NSString *id;
+@property (nonatomic, retain) NSString *placeid;
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *icon;
 @property (nonatomic, retain) NSString *infos;
@@ -23,11 +24,14 @@
 @property (nonatomic, retain) NSString *site;
 @property (nonatomic, retain) NSString *rating;
 @property (nonatomic, retain) NSString *nbrating;
-@property (nonatomic, retain) NSString *test;
+@property (nonatomic, retain) NSString *open_now;
 @property (nonatomic, retain) NSArray *type;
 @property (nonatomic, retain) NSArray *photo;
-@property (nonatomic,retain) NSArray *events;
-@property (nonatomic,retain) NSArray *avis;
+@property (nonatomic, retain) NSArray *events;
+@property (nonatomic, retain) NSArray *avis;
+@property (nonatomic, retain) NSArray *opening;
+@property (nonatomic, retain) NSArray *periods;
+
 @property (nonatomic) double distance;
 
 

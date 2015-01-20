@@ -13,10 +13,13 @@
 
 @interface Beer : NSObject
 
+@property (nonatomic, retain) NSString *id;
 @property (nonatomic, retain) NSString *nom;
+@property (nonatomic, retain) NSString *degre;
 @property (nonatomic, retain) NSString *type;
+@property (nonatomic, retain) NSString *rating;
 @property (nonatomic, retain) NSString *infos;
-@property (nonatomic) double prix;
+@property (nonatomic, retain) NSArray *bars;
 
 @end
 

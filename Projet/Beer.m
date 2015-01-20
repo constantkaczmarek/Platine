@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "Beer.h"
 
-@interface Beer()
-{
-}
-@end
-
 @implementation Beer
 
 @end

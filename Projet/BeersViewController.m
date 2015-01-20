@@ -8,29 +8,29 @@
 
 #import <Foundation/Foundation.h>
 #import "BeersViewController.h"
+#import "BeerViewController.h"
+#import <RestKit/RestKit.h>
+#import <objc/runtime.h>
+#import "Beer.h"
+#import "BeerCell.h"
+#define keyBeer @"cb4d603e5f9ce85509872034fb3667e2"
 
 @interface BeersViewController ()
 {
-    NSMutableArray *beers;
-    NSMutableArray *tampon;
-    NSMutableArray *tampon2;
+    NSArray *beers;
+    NSArray *searchResults;
+    bool addBeerMode;
+    NSString *beerMode;
 }
 @end
 
+const char keyAlert;
+
 @implementation BeersViewController
-@synthesize beersList;
-@synthesize searchBar;
-
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -38,81 +38,249 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    beers = [NSMutableArray array];
-    tampon = [NSMutableArray array];
-    
-    Beer *b1 = [[Beer alloc] init];
-    b1.nom = @"Leffe";
-    b1.type = @"Blonde";
-    b1.infos = @"Trop bonne";
-    b1.prix = 3.5;
-    [beers addObject:b1];
-    
-    Beer *b2 = [[Beer alloc] init];
-    b2.nom = @"1664";
-    b2.type = @"Brune";
-    b2.infos = @"Moins bonne";
-    b2.prix = 4;
-    [beers addObject:b2];
-    
-    Beer *b3 = [[Beer alloc] init];
-    b3.nom = @"Rince cochon";
-    b3.type = @"Rousse";
-    b3.infos = @"Meilleure";
-    b3.prix = 4.5;
-    [beers addObject:b3];
-    
-    [tampon addObjectsFromArray:beers];
+    if(self.bar){
+        addBeerMode = true;
+        beerMode = @"beersNotInPlaceId";
+
+    }else{
+        addBeerMode = false;
+        beerMode = @"beers";
+    }
     
     self.navigationItem.title = @"Bières";
+    
+    [self configureRestKit];
+    [self loadBeers];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [beers count];
+    if(tableView == self.searchDisplayController.searchResultsTableView) {
+        return searchResults.count;
+    } else {
+        return beers.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"beerItem";
+    BeerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"BeerCell" forIndexPath:indexPath];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    Beer *beer = nil;
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+
+
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
+    if(tableView == self.searchDisplayController.searchResultsTableView) {
+        beer = [searchResults objectAtIndex:indexPath.row];
+    } else {
+        beer = [beers objectAtIndex:indexPath.row];
     }
     
-    Beer *b = [beers objectAtIndex:indexPath.row];
-    cell.textLabel.text = b.nom;
-    cell.detailTextLabel.text = b.type;
-    cell.imageView.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    
+    if (addBeerMode) {
+        UIButton *addBar = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        addBar.frame = CGRectMake(200.0f, 5.0f, 75.0f, 30.0f);
+        [addBar setTitle:@"+" forState:UIControlStateNormal];
+        [addBar addTarget:self action:@selector(addBar:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = addBar;
+    }
+    
+    cell.BeerNom.text = beer.nom;
+    cell.BeerRating.text= beer.rating;
+    cell.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
     
     return cell;
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    Beer* beer = [beers objectAtIndex:indexPath.row];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:beer.nom message:@"Confirmer l'ajout de la bière ? \n\n\n" delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"Oui", nil];
+    
+    objc_setAssociatedObject(alert, &keyAlert, beer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    [alert show];
+}
+
+
+#pragma mark - Ajout d'une bière à un bar
+- (IBAction)addBar:(id)sender
 {
-    tampon2 = [[NSMutableArray alloc] init];
-    [tampon2 addObjectsFromArray:tampon];
-    [beers removeAllObjects];
-    if([searchText isEqualToString:@""])
-    {
-        [beers removeAllObjects];
-        [beers addObjectsFromArray:tampon]; // Restitution des données originales
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    Beer* beer = [beers objectAtIndex:[indexPath row]];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:beer.nom message:@"Confirmer l'ajout de la bière ? \n\n\n" delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"Oui", nil];
+    
+    objc_setAssociatedObject(alert, &keyAlert, beer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == 0){
         return;
     }
-    
-    for(Beer *b in tampon2)
-    {
-        NSString *test = b.nom;
-        NSRange r = [test rangeOfString:searchText];
-        if(r.location != NSNotFound)
-        {
-            if(r.location== 0)
-                [beers addObject:b];
-        }
+    if (buttonIndex == 1) {
+        Beer *beer = objc_getAssociatedObject(alertView, &keyAlert);
+        [self AddBeerToBar:beer :self.bar];
     }
 }
+
+
+- (void) AddBeerToBar:(Beer *)beer:(Bar *)bar{
+    
+   
+    NSDictionary *json = @{@"placeId": bar.placeid,@"beerId":beer.id};
+    
+    NSError *erreur = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:json options:0 error:&erreur];
+    
+    if (jsonData) {
+        NSLog(@"Envoie en cours");
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rest/request/create"]];
+        [httpClient setParameterEncoding:AFJSONParameterEncoding];
+        
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                                path:nil
+                                                          parameters:json];
+        
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        
+        [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+        
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // Print the response body in text
+            NSLog(@"Réponse: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+            NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            //bool response = responseObject;
+            UIAlertView* alert;
+            
+            if([response isEqual:@"false"]){
+                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"La demande a déjà été faite" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            }else{
+                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Votre demande a bien été enregistrée, nous la traitrerons dans les prochains jours." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            }
+            
+            [alert show];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Erreur: %@", error);
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Problème avec le serveur, veuillez réessayer." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }];
+        [operation start];
+        
+    } else {
+        NSLog(@"Impossible de sérializer %@: %@", json, erreur);
+    }
+
+}
+
+
+#pragma mark - Charger bières
+- (void)configureRestKit
+{
+    
+    NSURL *baseURL = [NSURL URLWithString:@"http://localhost:8080/api/rest"];
+
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    
+    [RKObjectManager sharedManager].HTTPClient = client;
+
+    RKObjectMapping *beerMapping = [RKObjectMapping mappingForClass:[Beer class]];
+    [beerMapping addAttributeMappingsFromDictionary:@{
+                                                     @"id": @"id",
+                                                     @"name": @"nom",
+                                                     @"infos": @"infos",
+                                                     @"rating":@"rating",
+                                                     @"bars": @"bars",
+                                                     }];
+    
+    // register mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:beerMapping
+                                                                                            method:RKRequestMethodGET
+                                                                                       pathPattern:beerMode
+                                                                                           keyPath:@""
+                                                                                       statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+    [[RKObjectManager sharedManager] addResponseDescriptor:responseDescriptor];
+}
+
+- (void)loadBeers
+{
+    NSDictionary *queryParams = @{};
+    
+    if(addBeerMode){
+        queryParams= @{@"placeId":self.bar.placeid};
+    }
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath: beerMode
+                                           parameters:queryParams
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  beers = mappingResult.array;
+                                                  [self.BeersList reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"What do you mean by 'there is no beers?': %@", error);
+                                              }];
+    
+}
+
+
+#pragma mark - Configuration de la recherche dans la table view
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
+    searchResults = [beers copy];
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
+    searchResults = nil;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView{
+    
+}
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nom contains[c] %@", searchString];
+    searchResults = [NSMutableArray arrayWithArray:[beers filteredArrayUsingPredicate:predicate]];
+    
+    return YES;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+}
+
+#pragma mark - Transmission de la bière
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if([[segue identifier] isEqualToString:@"detailBeerSegue"]){
+        NSInteger selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
+        BeerViewController *bvc = [segue destinationViewController];
+        bvc.beer = [beers objectAtIndex:selectedIndex];
+    }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    
+    if([identifier isEqualToString:@"detailBeerSegue"]){
+        if (addBeerMode) {
+            return false;
+        } else {
+            return true;
+        }
+    }else
+        return false;
+}
+
+
 
 @end

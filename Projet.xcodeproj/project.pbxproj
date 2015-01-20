@@ -11,6 +11,8 @@
 		012B63F61A346148002514A1 /* bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F51A346148002514A1 /* bar.jpg */; };
 		012ECD2A1A6569D2001A6516 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012ECD291A6569D2001A6516 /* MapViewController.m */; };
 		015495DA1A364D710055F3D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BE12851A363BEF002E1502 /* MapKit.framework */; };
+		0154F8E11A6AC75A007EE224 /* BeerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0154F8E01A6AC75A007EE224 /* BeerCell.m */; };
+		015C10F01A66C2AE00147135 /* BarBeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015C10EF1A66C2AE00147135 /* BarBeersViewController.m */; };
 		015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015DFD0D1A33786400E600E1 /* BarViewController.m */; };
 		01690AEF1A5C1C3700761633 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AEE1A5C1C3700761633 /* EventCell.m */; };
 		01690AF21A5C1DFB00761633 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AF11A5C1DFB00761633 /* Event.m */; };
@@ -28,6 +30,7 @@
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
 		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
+		01F875691A6662BA003E0267 /* BeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F875681A6662BA003E0267 /* BeerViewController.m */; };
 		EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E41A4035F8006F63D7 /* Beer.m */; };
 		EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E61A4035F8006F63D7 /* BeersViewController.m */; };
 		F7F9A9549347897B29BBE8B0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498BC474FF25960E63AB2A57 /* libPods.a */; };
@@ -48,6 +51,10 @@
 		012B63F51A346148002514A1 /* bar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar.jpg; sourceTree = "<group>"; };
 		012ECD291A6569D2001A6516 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		012ECD2B1A6569EC001A6516 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		0154F8DF1A6AC74C007EE224 /* BeerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeerCell.h; sourceTree = "<group>"; };
+		0154F8E01A6AC75A007EE224 /* BeerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeerCell.m; sourceTree = "<group>"; };
+		015C10EE1A66C27C00147135 /* BarBeersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarBeersViewController.h; sourceTree = "<group>"; };
+		015C10EF1A66C2AE00147135 /* BarBeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarBeersViewController.m; sourceTree = "<group>"; };
 		015DFD0D1A33786400E600E1 /* BarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarViewController.m; sourceTree = "<group>"; };
 		015DFD101A33788F00E600E1 /* BarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarViewController.h; sourceTree = "<group>"; };
 		01690AED1A5C1C1300761633 /* EventCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
@@ -81,6 +88,8 @@
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
 		0198F1311A38DC2B001A6FFB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		01BE12851A363BEF002E1502 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		01F875671A666287003E0267 /* BeerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeerViewController.h; sourceTree = "<group>"; };
+		01F875681A6662BA003E0267 /* BeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeerViewController.m; sourceTree = "<group>"; };
 		498BC474FF25960E63AB2A57 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEEA86BDB14D64EAF8CBF4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DFB6789FA62DCB6655CF1FA0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +154,10 @@
 				018284861A2BC57300DEBB81 /* AppDelegate.h */,
 				018284871A2BC57300DEBB81 /* AppDelegate.m */,
 				0182848F1A2BC57300DEBB81 /* Main.storyboard */,
+				0154F8DF1A6AC74C007EE224 /* BeerCell.h */,
+				0154F8E01A6AC75A007EE224 /* BeerCell.m */,
+				01F875671A666287003E0267 /* BeerViewController.h */,
+				01F875681A6662BA003E0267 /* BeerViewController.m */,
 				012ECD291A6569D2001A6516 /* MapViewController.m */,
 				012ECD2B1A6569EC001A6516 /* MapViewController.h */,
 				0175A6D01A346EC600C1D1CE /* BarCell.h */,
@@ -158,6 +171,8 @@
 				018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */,
 				015DFD101A33788F00E600E1 /* BarViewController.h */,
 				015DFD0D1A33786400E600E1 /* BarViewController.m */,
+				015C10EE1A66C27C00147135 /* BarBeersViewController.h */,
+				015C10EF1A66C2AE00147135 /* BarBeersViewController.m */,
 				01690AF01A5C1D4300761633 /* Event.h */,
 				01690AF91A5C40F700761633 /* Avis.h */,
 				01690AFA1A5C410700761633 /* Avis.m */,
@@ -368,9 +383,12 @@
 				EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */,
 				01690AF81A5C2E2F00761633 /* AvisCell.m in Sources */,
 				EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */,
+				0154F8E11A6AC75A007EE224 /* BeerCell.m in Sources */,
 				015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */,
 				019092F31A2F68D7000664C8 /* Bar.m in Sources */,
 				018284851A2BC57300DEBB81 /* main.m in Sources */,
+				015C10F01A66C2AE00147135 /* BarBeersViewController.m in Sources */,
+				01F875691A6662BA003E0267 /* BeerViewController.m in Sources */,
 				012ECD2A1A6569D2001A6516 /* MapViewController.m in Sources */,
 				01690AFB1A5C410700761633 /* Avis.m in Sources */,
 				0175A6D51A3487E800C1D1CE /* BarInfosViewController.m in Sources */,

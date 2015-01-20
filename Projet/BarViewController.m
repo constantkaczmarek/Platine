@@ -13,10 +13,11 @@
 #import "BarInfosViewController.h"
 #import "BarAvisController.h"
 #import "MapViewController.h"
+#import "BarBeersViewController.h"
 #import "Bar.h"
 #import "Event.h"
 #import "Avis.h"
-#define kKey @"AIzaSyCw-xTK5uQbecItdG-rQf9TuwPsYSPqjDY"
+#define kKey @"AIzaSyCiKxji5wKw7RDAzKcIWDzTl2eqDv7ilfY"
 
 
 @implementation BarViewController
@@ -44,45 +45,6 @@
     
     [self configureRestKit];
     [self loadBar];
-
-    [self.BarMap addAnnotation:self.bar];
-    //[self.BarMap showAnnotations:@[self.bar] animated:YES];
-
-    
-}
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    
-    //Calcul de la distance
-    CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) self.bar.lat) longitude:((CLLocationDegrees)self.bar.lng)];
-    CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
-    CLLocationDistance distance = [startLocation distanceFromLocation:endLocation];
-
-    self.bar.distance = distance;
-    NSLog([NSString stringWithFormat:@"%f ahahha",self.bar.distance]);
-    self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",self.bar.distance];
-    
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
-    [self.BarMap setRegion:[self.BarMap regionThatFits:region] animated:YES];
-    
-}
-
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    [self.locationManager requestAlwaysAuthorization];
-    [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [self.locationManager startUpdatingLocation];
-    self.locationManager = locations.lastObject;
-}
-
-- (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    
-    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self.BarMap setShowsUserLocation:YES];
-    }
 }
 
 
@@ -90,35 +52,35 @@
 
 - (void)configureRestKit
 {
+    NSURL *baseURL = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    
+    [RKObjectManager sharedManager].HTTPClient = client;
+
     // setup object mappings
     RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
-    RKObjectMapping *avisMapping = [RKObjectMapping mappingForClass:[Avis class]];
     
     [barMapping addAttributeMappingsFromDictionary:@{
                                                      @"id": @"id",
+                                                     @"place_id": @"placeid",
                                                      @"name": @"nom",
                                                      @"icon": @"icon",
                                                      @"photos": @"photo",
                                                      //@"types": @"type",
-                                                     @"formatted_address": @"address",
+                                                     @"vicinity": @"address",
                                                      @"formatted_phone_number": @"tel",
                                                      @"geometry.location.lat": @"lat",
                                                      @"geometry.location.lng": @"lng",
                                                      @"user_ratings_total": @"nbrating",
                                                      @"rating":@"rating",
                                                      @"reviews":@"avis",
+                                                     @"website":@"site",
+                                                     @"opening_hours.weekday_text":@"opening",
+                                                     @"opening_hours.open_now":@"open_now",
+                                                     @"opening_hours.periods":@"periods",
                                                      }];
     
-    /*[avisMapping addAttributeMappingsFromDictionary:@{
-                                                      @"author_name":@"auteur",
-                                                      @"rating": @"rating",
-                                                      @"text":@"text",
-                                                      @"time":@"time",
-                                                      }];
-    
-    [barMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"reviews"
-                                                                                   toKeyPath:@"reviews"
-                                                                                 withMapping:avisMapping]];*/
+
     
     
     // register mappings with the provider using a response descriptor
@@ -144,6 +106,9 @@
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.bar = mappingResult.firstObject;
                                                   self.BarRating.text =  [NSString stringWithFormat:@"%@ sur %@ avis",self.bar.rating,self.bar.nbrating];
+                                                  self.BarTel.text = self.bar.tel;
+                                                  self.BarAdresse.text = self.bar.address;
+                                                  self.BarSite.text = self.bar.site;
                                                
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -179,6 +144,10 @@
         BarInfosViewController *bivc = [segue destinationViewController];
         bivc.bar = self.bar;
     }
+    if([[segue identifier] isEqualToString:@"barBeersSegue"]){
+        BarBeersViewController *bivc = [segue destinationViewController];
+        bivc.bar = self.bar;
+    }
     else if([[segue identifier] isEqualToString:@"barAvisSegue"]){
         BarAvisController *bac = [segue destinationViewController];
         bac.bar = self.bar;
@@ -187,6 +156,7 @@
         MapViewController *mp = [segue destinationViewController];
         mp.bar = self.bar;
     }
+    
 }
 
 
