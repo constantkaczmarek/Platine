@@ -20,6 +20,8 @@
     NSMutableArray *searchResults;
     CLLocation *currentLocation;
     NSArray *_bars;
+    UIActivityIndicatorView *indicator;
+    NSCache *barsCache;
 }
 
 @end
@@ -47,7 +49,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    //Geolocalisation
+    barsCache = [[NSCache alloc] init];
+    
+    //Spinner lors du chargement
+    UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    activityContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.25];
+    indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2) - 40, (self.view.frame.size.height/2) - 40, 80, 80)];
+    indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    indicator.backgroundColor = [UIColor blackColor];
+    [indicator layer].cornerRadius = 8.0;
+    [indicator layer].masksToBounds = YES;
+    [self.view addSubview:indicator];
+    [indicator startAnimating];
+    
+    //Geolocalisation et chargement des bars
     [self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
     
@@ -61,10 +76,13 @@
         [locationManager startUpdatingLocation];
         currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
     }
+    
 
     self.navigationItem.title = @"Bars";
     [self loadBars];
     
+    
+    //Action refresh
     self.refreshBar.target = self;
     self.refreshBar.action = @selector(refresh:);
 
@@ -76,8 +94,18 @@
     
 }
 
-
 #pragma mark - Configuration de la table view
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 91.0;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(BarCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -89,15 +117,17 @@
     }
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     BarCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyIdentifier" forIndexPath:indexPath];
-
+    
     // Configuration de la cellule
     Bar *bar = nil;
 
     if (tableView == self.searchDisplayController.searchResultsTableView){
+        [self.searchDisplayController.searchResultsTableView registerClass:[BarCell class] forCellReuseIdentifier:@"MyIdentifier"];
         bar = [searchResults objectAtIndex:indexPath.row];
     }
     else {
@@ -197,7 +227,7 @@
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     // initialize RestKit
-    RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    [RKObjectManager sharedManager].HTTPClient = client;
     
     // setup object mappings
     RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
@@ -218,7 +248,7 @@
                                                                                            keyPath:@"results"
                                                                                        statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
-    [objectManager addResponseDescriptor:responseDescriptor];
+    [[RKObjectManager sharedManager] addResponseDescriptor:responseDescriptor];
 }
 
 - (void)loadBars
@@ -241,10 +271,26 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   _bars = mappingResult.array;
+                                                  if(barsCache == nil){
+                                                      [barsCache setObject: _bars forKey: @"listBars"];
+                                                      NSLog(@"cache rempli");
+                                                  }else if(_bars.count == 0 && barsCache!= nil){
+                                                      _bars = [barsCache objectForKey:@"listBars"];
+                                                      NSLog([NSString stringWithFormat:@"%lu ",(unsigned long)_bars.count]);
+                                                      [self sortBarsByDistance];
+                                                  }
+  
+                                                  for (Bar *b in [barsCache objectForKey:@"listBars"]) {
+                                                      NSLog(@"tesrt");
+                                                      NSLog(b.nom);
+                                                  }
+                                                  
+                                                  [indicator stopAnimating];
                                                   [self sortBarsByDistance];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no bar?': %@", error);
+                                                  [indicator stopAnimating];
                                               }];
 
 }

@@ -38,16 +38,7 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     
-    //Calcul de la distance
-    /*CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) self.bar.lat) longitude:((CLLocationDegrees)self.bar.lng)];
-    CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
-    CLLocationDistance distance = [startLocation distanceFromLocation:endLocation];
-    
-    self.bar.distance = distance;
-    NSLog([NSString stringWithFormat:@"%f ahahha",self.bar.distance]);
-    self.BarDistance.text = [NSString stringWithFormat: @"%.0f m",self.bar.distance];*/
-    
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 300, 300);
     [self.BarMap setRegion:[mapView regionThatFits:region] animated:YES];
     
 }
@@ -63,7 +54,6 @@
 
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self.BarMap setShowsUserLocation:YES];
     }

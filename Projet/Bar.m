@@ -32,7 +32,7 @@
 }
 
 - (NSString *)subtitle {
-    return [NSString stringWithFormat:@"infos : %@", self.infos];
+    return [NSString stringWithFormat:@"Note : %@", self.rating];
 }
 
 - (CLLocationCoordinate2D)coordinate {

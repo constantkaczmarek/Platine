@@ -47,19 +47,52 @@ const char keyAlert;
         beerMode = @"beers";
     }
     
+    
     self.navigationItem.title = @"Bières";
     
     [self configureRestKit];
     [self loadBeers];
+    
+    self.BeerRefresh.target = self;
+    self.BeerRefresh.action = @selector(refresh:);
+    
+    
+}
+
+- (IBAction)refresh:(id)sender{
+    [self loadBeers];
+}
+
+#pragma mark - Configuration de la tableView
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 91.0;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(BeerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(4,5,366,80)];
+    whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
+    whiteRoundedCornerView.layer.masksToBounds = NO;
+    //whiteRoundedCornerView.layer.cornerRadius = 3.0;
+    whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);
+    whiteRoundedCornerView.layer.shadowOpacity = 0.3;
+    [cell.contentView addSubview:whiteRoundedCornerView];
+    [cell.contentView sendSubviewToBack:whiteRoundedCornerView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(tableView == self.searchDisplayController.searchResultsTableView) {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
         return searchResults.count;
-    } else {
+    }else
         return beers.count;
-    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,9 +100,6 @@ const char keyAlert;
     BeerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"BeerCell" forIndexPath:indexPath];
     
     Beer *beer = nil;
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-
-
     
     if(tableView == self.searchDisplayController.searchResultsTableView) {
         beer = [searchResults objectAtIndex:indexPath.row];
@@ -153,19 +183,17 @@ const char keyAlert;
         [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
         
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            // Print the response body in text
-            NSLog(@"Réponse: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+            
             NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            //bool response = responseObject;
-            UIAlertView* alert;
+            UIAlertView *alert = nil;
             
-            if([response isEqual:@"false"]){
-                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"La demande a déjà été faite" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            if([response isEqualToString:@"false"]){
+                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"La demande a déjà été faite" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
             }else{
-                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Votre demande a bien été enregistrée, nous la traitrerons dans les prochains jours." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Votre demande a bien été enregistrée, nous la traiterons dans les prochains jours." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
             }
-            
-            [alert show];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Erreur: %@", error);
@@ -197,6 +225,7 @@ const char keyAlert;
                                                      @"name": @"nom",
                                                      @"infos": @"infos",
                                                      @"rating":@"rating",
+                                                     @"degree":@"degre",
                                                      @"bars": @"bars",
                                                      }];
     

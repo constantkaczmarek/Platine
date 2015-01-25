@@ -25,9 +25,6 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
-    
-   /* UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(segueBar:)];
-    self.navigationItem.rightBarButtonItem = addItem;*/
   
     self.title = self.bar.nom;
     [self configureRestKit];
@@ -66,16 +63,14 @@
 #pragma mark - Charger bières
 - (void)configureRestKit
 {
-    // initialize AFNetworking HTTPClient
     NSURL *baseURL = [NSURL URLWithString:@"http://localhost:8080/api/rest"];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    // initialize RestKit
     [RKObjectManager sharedManager].HTTPClient = client;
-    // setup object mappings
     RKObjectMapping *beerMapping = [RKObjectMapping mappingForClass:[Beer class]];
     [beerMapping addAttributeMappingsFromDictionary:@{
                                                       @"id": @"id",
-                                                      @"nom": @"nom",
+                                                      @"name": @"nom",
+                                                      @"rating":@"rating",
                                                       @"infos": @"infos",
                                                       }];
     

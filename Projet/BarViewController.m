@@ -10,12 +10,10 @@
 #import <RestKit/RestKit.h>
 #import <RKRequestDescriptor.h>
 #import "BarViewController.h"
-#import "BarInfosViewController.h"
 #import "BarAvisController.h"
 #import "MapViewController.h"
 #import "BarBeersViewController.h"
 #import "Bar.h"
-#import "Event.h"
 #import "Avis.h"
 #define kKey @"AIzaSyCiKxji5wKw7RDAzKcIWDzTl2eqDv7ilfY"
 
@@ -33,7 +31,6 @@
     self.BarMap.delegate = self;
     self.BarDistance.text = [NSString stringWithFormat:@"%.0f m",self.bar.distance];
     
-    
     [self loadPhoto];
 
     self.locationManager = [[CLLocationManager alloc] init];
@@ -42,6 +39,7 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
+    
     
     [self configureRestKit];
     [self loadBar];
@@ -79,8 +77,6 @@
                                                      @"opening_hours.open_now":@"open_now",
                                                      @"opening_hours.periods":@"periods",
                                                      }];
-    
-
     
     
     // register mappings with the provider using a response descriptor
@@ -140,10 +136,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    if([[segue identifier] isEqualToString:@"barInfosSegue"]){
-        BarInfosViewController *bivc = [segue destinationViewController];
-        bivc.bar = self.bar;
-    }
+
     if([[segue identifier] isEqualToString:@"barBeersSegue"]){
         BarBeersViewController *bivc = [segue destinationViewController];
         bivc.bar = self.bar;

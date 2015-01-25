@@ -32,6 +32,8 @@
     self.BeerInfos.text = self.beer.infos;
     self.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
     self.title = self.beer.nom;
+    self.BeerDegre.text = self.beer.degre;
+    self.BeerRating.text = self.beer.rating;
     
     [self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
@@ -49,6 +51,7 @@
 
     [self loadBars];
     [self.BeerNoter addTarget:self action:@selector(addNote:) forControlEvents:UIControlEventTouchUpInside];
+
     
 }
 
@@ -65,6 +68,8 @@
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:self.beer.nom message:@"Confirmer l'ajout de la bière ? \n\n\n" delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Noter", nil];
     
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField* tf = [alert textFieldAtIndex:0];
+    tf.keyboardType = UIKeyboardTypeNumberPad;
     
     [alert show];
 }
@@ -90,7 +95,7 @@
 
     if (jsonData) {
         NSLog(@"Envoie en cours");
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rating/addVote"]];
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rest/rating/addVote"]];
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
@@ -104,15 +109,9 @@
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             // Print the response body in text
             NSLog(@"Réponse: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-            NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            UIAlertView* alert = nil;
-            
-            if([response isEqual:@"false"]){
-                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Vous avez déjà donné votre notre pour cette bière." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            }else{
-                alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Votre note a bien été prise en compte." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            }
-            
+
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Votre (nouvelle) note a bien été prise en compte." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                
             [alert show];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -199,6 +198,7 @@
     [barMapping addAttributeMappingsFromDictionary:@{
                                                      @"placeId": @"id",
                                                      @"name": @"nom",
+                                                     @"rating":@"rating",
                                                      @"lat": @"lat",
                                                      @"lng": @"lng",
                                                     }];
@@ -225,6 +225,8 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   bars = mappingResult.array;
+                                                  self.BeerDegre.text = self.beer.degre;
+                                                  self.BeerRating.text = self.beer.rating;
                                                   [self sortBarsByDistance];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {

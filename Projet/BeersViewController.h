@@ -14,13 +14,14 @@
 extern const char keyAlert;
 
 
-@interface BeersViewController : UITableViewController <UISearchDisplayDelegate>
+@interface BeersViewController : UITableViewController <UISearchDisplayDelegate,UISearchControllerDelegate,UISearchBarDelegate>
 
 
 @property (nonatomic) bool *AddingBeer;
 @property (retain, nonatomic) Bar *bar;
 @property (strong, nonatomic) IBOutlet UITableView *BeersList;
 @property (weak, nonatomic) IBOutlet UISearchBar *BeerSearch;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *BeerRefresh;
 
 @end
 
