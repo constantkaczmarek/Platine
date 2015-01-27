@@ -22,6 +22,7 @@
     NSArray *_bars;
     UIActivityIndicatorView *indicator;
     NSCache *barsCache;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -51,16 +52,6 @@
     
     barsCache = [[NSCache alloc] init];
     
-    //Spinner lors du chargement
-    UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    activityContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.25];
-    indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2) - 40, (self.view.frame.size.height/2) - 40, 80, 80)];
-    indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    indicator.backgroundColor = [UIColor blackColor];
-    [indicator layer].cornerRadius = 8.0;
-    [indicator layer].masksToBounds = YES;
-    [self.view addSubview:indicator];
-    [indicator startAnimating];
     
     //Geolocalisation et chargement des bars
     [self configureRestKit];
@@ -88,9 +79,10 @@
 
 }
 
-
 - (IBAction)refresh:(id)sender{
-    [self viewDidLoad];
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager startUpdatingLocation];
+    [self loadBars];
     
 }
 
@@ -206,7 +198,7 @@
     for (Bar* b in _bars) {
         
         CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) b.lat) longitude:((CLLocationDegrees)b.lng)];
-        CLLocationDistance d = [barLocation distanceFromLocation:currentLocation];
+        CLLocationDistance d = [barLocation distanceFromLocation:locationManager.location];
         b.distance = d;
     }
     
@@ -253,11 +245,24 @@
 
 - (void)loadBars
 {
+    //Spinner lors du chargement
+    UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    activityContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.25];
+    indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2) - 40, (self.view.frame.size.height/2) - 40, 80, 80)];
+    indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    indicator.backgroundColor = [UIColor blackColor];
+    [indicator layer].cornerRadius = 2.0;
+    [indicator layer].masksToBounds = YES;
+    [self.view addSubview:indicator];
+    [indicator startAnimating];
+    
+    locationManager = [[CLLocationManager alloc] init];
+
+    [locationManager startUpdatingLocation];
     
     NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
     //NSString *loc = [NSString stringWithFormat:@"%f,%f",50.6353821,3.0651736];
     NSString *key = kKey;
-    
     
     NSDictionary *queryParams = @{@"location" : loc,
                                   @"radius" : @"500",
@@ -271,6 +276,8 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   _bars = mappingResult.array;
+                                                  
+                                                  
                                                   if(barsCache == nil){
                                                       [barsCache setObject: _bars forKey: @"listBars"];
                                                       NSLog(@"cache rempli");
@@ -283,6 +290,20 @@
                                                   for (Bar *b in [barsCache objectForKey:@"listBars"]) {
                                                       NSLog(@"tesrt");
                                                       NSLog(b.nom);
+                                                  }
+                                                  
+                                                  if (!_bars){
+                                                      UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                                                      
+                                                      messageLabel.text = @"Aucune données disponibles. Veuillez rééssayer.";
+                                                      messageLabel.textColor = [UIColor blackColor];
+                                                      messageLabel.numberOfLines = 0;
+                                                      messageLabel.textAlignment = NSTextAlignmentCenter;
+                                                      messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+                                                      [messageLabel sizeToFit];
+                                                      
+                                                      self.tableView.backgroundView = messageLabel;
+                                                      self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
                                                   }
                                                   
                                                   [indicator stopAnimating];

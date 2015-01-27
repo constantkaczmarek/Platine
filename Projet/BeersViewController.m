@@ -21,6 +21,8 @@
     NSArray *searchResults;
     bool addBeerMode;
     NSString *beerMode;
+    UIActivityIndicatorView *indicator;
+
 }
 @end
 
@@ -38,6 +40,11 @@ const char keyAlert;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bar.jpg"]];
+    self.view.opaque = true;
+
+    
     if(self.bar){
         addBeerMode = true;
         beerMode = @"beersNotInPlaceId";
@@ -241,7 +248,18 @@ const char keyAlert;
 
 - (void)loadBeers
 {
+    //Spinner lors du chargement
+    UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    activityContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.25];
+    indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2) - 40, (self.view.frame.size.height/2) - 40, 80, 80)];
+    indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    indicator.backgroundColor = [UIColor blackColor];
+    [indicator layer].cornerRadius = 8.0;
+    [indicator layer].masksToBounds = YES;
+    [self.view addSubview:indicator];
+    [indicator startAnimating];
     NSDictionary *queryParams = @{};
+    
     
     if(addBeerMode){
         queryParams= @{@"placeId":self.bar.placeid};
@@ -251,6 +269,7 @@ const char keyAlert;
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   beers = mappingResult.array;
+                                                  [indicator stopAnimating];
                                                   [self.BeersList reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {

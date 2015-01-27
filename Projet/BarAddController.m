@@ -11,10 +11,14 @@
 #import <AFNetworking/AFHTTPRequestOperation.h>
 #import <AFNetworking/AFHTTPClient.h>
 #import <AFNetworking/AFJSONRequestOperation.h>
+#import <AFImageRequestOperation.h>
+#import <RestKit/RestKit.h>
+#import "Beer.h"
 
 @interface BeerAddController()
 {
     NSString *imageName;
+    NSString *idRequest;
 }
 
 @end
@@ -24,6 +28,7 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
+    [self.BeerAdd setEnabled:FALSE];
     [self.BeerChoosePhoto addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.BeerAdd addTarget:self action:@selector(addBeer:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -45,25 +50,33 @@
 {
     UIImage *beerImage = image;
     self.BeerImage.image = beerImage;
+    
+    //[self addImage:beerImage];
 
-    NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
+    NSDictionary *params = @{@"file":@"imageName",};
+    
+    NSData *imageData = UIImageJPEGRepresentation(beerImage, 0.5);
     
     /*[params setObject:@"myUserName" forKey:@"username"];
     [params setObject:@"1234" forKey:@"password"];*/
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:8080/api/rest/beerRequest/create"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.10.4:8080/createBeer"]];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    NSData *imageData = UIImageJPEGRepresentation(beerImage, 0.5);
     
-    
-    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:nil parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData>formData){
-                      [formData appendPartWithFileData:imageData name:@"beerFile" fileName:@"beer.png" mimeType:@"image/png"];
+    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:nil parameters:nil constructingBodyWithBlock: ^(id <AFMultipartFormData>formData){
+                      [formData appendPartWithFileData:imageData name:@"file" fileName:@"request.jpg" mimeType:@"image/jpg"];
     }];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
                                          {
+                                             NSDictionary *resp = JSON;
+                                             NSLog(@"%@",[resp objectForKey:@"id"]);
+                                             idRequest = [NSString stringWithFormat:@"%@",[resp objectForKey:@"id"]];
+
+                                             [self.BeerAdd setEnabled:TRUE];
+                                             
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Transfet de l'image en cours." delegate:self cancelButtonTitle:@"Fermer" otherButtonTitles: nil];
                                              [alert show];
                                              
@@ -80,6 +93,7 @@
     
     [httpClient enqueueHTTPRequestOperation:operation];
     
+    
     [self dismissModalViewControllerAnimated:true];
     
 }
@@ -87,7 +101,7 @@
 - (IBAction)addBeer:(id)sender{
     
     NSDictionary *json = @{@"name": self.BeerNom.text,
-                           @"imgfull": @"FullImg.jpg",
+                           @"id": idRequest,
                            @"infos": self.BeerInfos.text,
                            @"degree": self.BeerDegre.text,
                            @"type": self.BeerType.text,
@@ -98,7 +112,7 @@
     
     if (jsonData) {
         NSLog(@"Envoie en cours");
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rest/beerRequest/create"]];
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://172.19.158.13:8080/api/rest/beerRequest/create"]];
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
