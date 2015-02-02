@@ -12,6 +12,8 @@
 #import "BeersViewController.h"
 #import "BeerCell.h"
 #import <RestKit/RestKit.h>
+#define keyIp @"http://localhost:8080"
+
 
 @interface BarBeersViewController()
 {
@@ -27,6 +29,7 @@
     [super viewDidLoad];
   
     self.title = self.bar.nom;
+    //self.title = @"Circus";
     [self configureRestKit];
     [self loadBeers];
 }
@@ -51,9 +54,16 @@
    
     beer = [beers objectAtIndex:indexPath.row];
     
+    
     cell.BeerNom.text = beer.nom;
     cell.BeerRating.text = beer.rating;
-    cell.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    //cell.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadPhoto:beer :cell];
+        });
+    });
+    
     
     return cell;
 }
@@ -63,13 +73,14 @@
 #pragma mark - Charger bières
 - (void)configureRestKit
 {
-    NSURL *baseURL = [NSURL URLWithString:@"http://localhost:8080/api/rest"];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest"]];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     [RKObjectManager sharedManager].HTTPClient = client;
     RKObjectMapping *beerMapping = [RKObjectMapping mappingForClass:[Beer class]];
     [beerMapping addAttributeMappingsFromDictionary:@{
                                                       @"id": @"id",
                                                       @"name": @"nom",
+                                                      @"icon":@"icon",
                                                       @"rating":@"rating",
                                                       @"infos": @"infos",
                                                       }];
@@ -98,6 +109,27 @@
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no beers?': %@", error);
                                               }];
+    
+}
+
+- (void)loadPhoto:(Beer *)beer:(BeerCell *)beercell
+{
+    
+    NSString *maxwith= @"150";
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",keyIp,beer.icon];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+     
+     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
+     imageProcessingBlock:nil
+     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+     beercell.BeerImage.image = image;
+     
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+     NSLog(@"%@", [error localizedDescription]);
+     }];
+     
+     [operation start];
     
 }
 

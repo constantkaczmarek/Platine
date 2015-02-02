@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -23,6 +24,28 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="splashscreen.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Rxd-Rg-cJJ">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="667" id="68v-mt-isb"/>
+                        <constraint firstAttribute="width" constant="375" id="MFa-4n-WrB"/>
+                        <constraint firstAttribute="width" secondItem="Rxd-Rg-cJJ" secondAttribute="height" multiplier="375:667" id="rVY-sA-VeF"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="68v-mt-isb"/>
+                            <exclude reference="MFa-4n-WrB"/>
+                            <exclude reference="rVY-sA-VeF"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=compact-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="68v-mt-isb"/>
+                            <include reference="MFa-4n-WrB"/>
+                            <include reference="rVY-sA-VeF"/>
+                        </mask>
+                    </variation>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -30,12 +53,35 @@
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstItem="Rxd-Rg-cJJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TFg-D9-djV"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstAttribute="bottom" secondItem="Rxd-Rg-cJJ" secondAttribute="bottom" id="cpu-lb-pS0"/>
+                <constraint firstItem="Rxd-Rg-cJJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="drx-sV-fRU"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstAttribute="trailing" secondItem="Rxd-Rg-cJJ" secondAttribute="trailing" id="tyP-3n-M5f"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="548" y="455"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="TFg-D9-djV"/>
+                    <exclude reference="cpu-lb-pS0"/>
+                    <exclude reference="drx-sV-fRU"/>
+                    <exclude reference="tyP-3n-M5f"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="TFg-D9-djV"/>
+                    <include reference="cpu-lb-pS0"/>
+                    <include reference="drx-sV-fRU"/>
+                    <include reference="tyP-3n-M5f"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="547.5" y="454.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="splashscreen.jpg" width="2666" height="4733"/>
+    </resources>
 </document>

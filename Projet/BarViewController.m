@@ -28,8 +28,7 @@
     
     [super viewDidLoad];
     self.Title.title = self.bar.nom;
-    self.BarImage.image = [UIImage imageNamed:@"bar.jpg"];
-    self.BarMap.delegate = self;
+    self.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
     self.BarDistance.text = [NSString stringWithFormat:@"%.0f m",self.bar.distance];
     
     [self loadPhoto];
@@ -41,11 +40,30 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     
+    [self.view addSubview:self.WhiteRect];
+    
+    [self.view sendSubviewToBack:self.WhiteRect];
     
     [self configureRestKit];
     [self loadBar];
 }
 
+-(IBAction)call:(id)sender{
+    NSLog(@"ca marche");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.bar.tel]];
+}
+
+-(IBAction)openSite:(id)sender{
+    NSLog(@"ca marche");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.bar.site]];
+}
+
+-(IBAction)openAdresse:(id)sender{
+    NSString *addressOnMap = self.bar.address;
+    NSString* addr = [NSString stringWithFormat:@"http://maps.apple.com/?q=%@",addressOnMap];
+    NSURL* url = [[NSURL alloc] initWithString:[addr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:url];
+}
 
 #pragma mark - Configuration des requêtes REST
 
@@ -103,10 +121,16 @@
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.bar = mappingResult.firstObject;
                                                   self.BarRating.text =  [NSString stringWithFormat:@"%@ sur %@ avis",self.bar.rating,self.bar.nbrating];
-                                                  self.BarTel.text = self.bar.tel;
-                                                  self.BarAdresse.text = self.bar.address;
-                                                  self.BarSite.text = self.bar.site;
-                                               
+                                                  
+                                                  [self.BarTelButton setTitle:self.bar.tel forState:UIControlStateNormal];
+                                                  [self.BarTelButton addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
+                                                  
+                                                  [self.BarSiteButton setTitle:self.bar.site forState:UIControlStateNormal];
+                                                  //[self.BarSiteButton setTitle:@"www.circus.com" forState:UIControlStateNormal];
+                                                  [self.BarSiteButton addTarget:self action:@selector(openSite:) forControlEvents:UIControlEventTouchUpInside];
+                                                  
+                                                  [self.BarAdresseButton setTitle:self.bar.address forState:UIControlStateNormal];
+                                                  [self.BarAdresseButton addTarget:self action:@selector(openAdresse:) forControlEvents:UIControlEventTouchUpInside];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no bar?': %@", error);

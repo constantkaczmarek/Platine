@@ -14,6 +14,7 @@
 #import "Beer.h"
 #import "BeerCell.h"
 #define keyBeer @"cb4d603e5f9ce85509872034fb3667e2"
+#define keyIp @"http://localhost:8080"
 
 @interface BeersViewController ()
 {
@@ -22,6 +23,7 @@
     bool addBeerMode;
     NSString *beerMode;
     UIActivityIndicatorView *indicator;
+    bool isFilt;
 
 }
 @end
@@ -37,14 +39,17 @@ const char keyAlert;
 
 #pragma mark - View lifecycle
 
+/*-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:TRUE];
+    [self viewDidLoad];
+}*/
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bar.jpg"]];
-    self.view.opaque = true;
-
-    
+    isFilt = false;
     if(self.bar){
         addBeerMode = true;
         beerMode = @"beersNotInPlaceId";
@@ -74,32 +79,18 @@ const char keyAlert;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 91.0;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(BeerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
-    
-    cell.contentView.backgroundColor = [UIColor clearColor];
-    UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(4,5,366,80)];
-    whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
-    whiteRoundedCornerView.layer.masksToBounds = NO;
-    //whiteRoundedCornerView.layer.cornerRadius = 3.0;
-    whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);
-    whiteRoundedCornerView.layer.shadowOpacity = 0.3;
-    [cell.contentView addSubview:whiteRoundedCornerView];
-    [cell.contentView sendSubviewToBack:whiteRoundedCornerView];
+    return 83.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
+        isFilt = true;
         return searchResults.count;
-    }else
+    }else{
+        isFilt = false;
         return beers.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,19 +105,24 @@ const char keyAlert;
         beer = [beers objectAtIndex:indexPath.row];
     }
     
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadPhoto:beer :cell];
+        });
+    });
+    
     
     if (addBeerMode) {
         UIButton *addBar = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         addBar.frame = CGRectMake(200.0f, 5.0f, 75.0f, 30.0f);
         [addBar setTitle:@"+" forState:UIControlStateNormal];
+        [addBar setTintColor:[UIColor colorWithRed:167.0/255.0f green:7.0/255.0f blue:20.0/255.0f alpha:1]];
         [addBar addTarget:self action:@selector(addBar:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = addBar;
     }
     
     cell.BeerNom.text = beer.nom;
     cell.BeerRating.text= beer.rating;
-    cell.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
-    
     return cell;
 }
 
@@ -140,7 +136,6 @@ const char keyAlert;
     [alert show];
 }
 
-
 #pragma mark - Ajout d'une bière à un bar
 - (IBAction)addBar:(id)sender
 {
@@ -153,7 +148,6 @@ const char keyAlert;
     objc_setAssociatedObject(alert, &keyAlert, beer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     [alert show];
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -167,7 +161,6 @@ const char keyAlert;
     }
 }
 
-
 - (void) AddBeerToBar:(Beer *)beer:(Bar *)bar{
     
    
@@ -178,7 +171,7 @@ const char keyAlert;
     
     if (jsonData) {
         NSLog(@"Envoie en cours");
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rest/request/create"]];
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest/request/create"]]];
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
@@ -212,7 +205,6 @@ const char keyAlert;
     } else {
         NSLog(@"Impossible de sérializer %@: %@", json, erreur);
     }
-
 }
 
 
@@ -220,7 +212,7 @@ const char keyAlert;
 - (void)configureRestKit
 {
     
-    NSURL *baseURL = [NSURL URLWithString:@"http://localhost:8080/api/rest"];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest"]];
 
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
@@ -230,6 +222,8 @@ const char keyAlert;
     [beerMapping addAttributeMappingsFromDictionary:@{
                                                      @"id": @"id",
                                                      @"name": @"nom",
+                                                     @"icon":@"icon",
+                                                     @"img":@"img",
                                                      @"infos": @"infos",
                                                      @"rating":@"rating",
                                                      @"degree":@"degre",
@@ -258,7 +252,7 @@ const char keyAlert;
     [indicator layer].masksToBounds = YES;
     [self.view addSubview:indicator];
     [indicator startAnimating];
-    NSDictionary *queryParams = @{};
+    NSDictionary *queryParams = nil;
     
     
     if(addBeerMode){
@@ -276,6 +270,24 @@ const char keyAlert;
                                                   NSLog(@"What do you mean by 'there is no beers?': %@", error);
                                               }];
     
+}
+
+- (void)loadPhoto:(Beer *)beer:(BeerCell *)beercell
+{
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",keyIp,beer.icon];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
+                                                                              imageProcessingBlock:nil
+                                                                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                                                               beercell.BeerImage.image = image;
+                                                                                               
+                                                                                           } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                               NSLog(@"%@", [error localizedDescription]);
+                                                                                           }];
+    
+    [operation start];
 }
 
 
@@ -311,9 +323,21 @@ const char keyAlert;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([[segue identifier] isEqualToString:@"detailBeerSegue"]){
-        NSInteger selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
+        NSInteger selectedIndex;
+        if(isFilt){
+            selectedIndex =  [[self.searchDisplayController.searchResultsTableView indexPathForSelectedRow] row];
+        }else
+        {
+            selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
+        }
         BeerViewController *bvc = [segue destinationViewController];
-        bvc.beer = [beers objectAtIndex:selectedIndex];
+        if(isFilt){
+        bvc.beer = [searchResults objectAtIndex:selectedIndex];
+            self.searchDisplayController.active = NO;
+
+        }else{
+            bvc.beer = [beers objectAtIndex:selectedIndex];
+        }
     }
 }
 

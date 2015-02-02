@@ -28,6 +28,22 @@
     return self.bar.avis.count;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *avis =[self.bar.avis objectAtIndex:indexPath.row];
+    NSString *labelText = avis[@"text"];
+    return [self heightForText:labelText];
+}
+
+- (CGFloat)heightForText:(NSString *)bodyText
+{
+    UIFont *cellFont = [UIFont systemFontOfSize:13];
+    CGSize constraintSize = CGSizeMake(300, MAXFLOAT);
+    CGSize labelSize = [bodyText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+    CGFloat height = labelSize.height + 10;
+    return height;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AvisCell *cell = [self.AvisTable dequeueReusableCellWithIdentifier:@"AvisCell" forIndexPath:indexPath];
@@ -37,6 +53,9 @@
     cell.AvisAuteur.text = avis[@"author_name"];
     cell.AvisText.text = avis[@"text"];
     cell.AvisRating.text = [NSString stringWithFormat:@"%@",avis[@"rating"]];
+    
+    CGFloat rowHeight = [self heightForText:cell.AvisAuteur.text];
+    cell.AvisAuteur.frame = CGRectMake(0, 0, 300, rowHeight);
     
     return cell;
 

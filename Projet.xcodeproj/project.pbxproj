@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01271F931A7F6F56002E02C5 /* splashscreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01271F921A7F6F56002E02C5 /* splashscreen.jpg */; };
 		012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F31A34613F002514A1 /* bar_icon.jpg */; };
 		012B63F61A346148002514A1 /* bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 012B63F51A346148002514A1 /* bar.jpg */; };
 		012ECD2A1A6569D2001A6516 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012ECD291A6569D2001A6516 /* MapViewController.m */; };
@@ -18,6 +19,9 @@
 		01690AF51A5C2C9700761633 /* BarAvisController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AF41A5C2C9700761633 /* BarAvisController.m */; };
 		01690AF81A5C2E2F00761633 /* AvisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AF71A5C2E2F00761633 /* AvisCell.m */; };
 		01690AFB1A5C410700761633 /* Avis.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AFA1A5C410700761633 /* Avis.m */; };
+		01734F5D1A7E617600BAF46C /* Leffe blonde.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01734F5C1A7E617600BAF46C /* Leffe blonde.jpg */; };
+		01734F5F1A7E61FB00BAF46C /* Rince cochon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01734F5E1A7E61FB00BAF46C /* Rince cochon.jpg */; };
+		01734F611A7E623100BAF46C /* Anosteké.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01734F601A7E623100BAF46C /* Anosteké.jpg */; };
 		0175A6D21A346ED200C1D1CE /* BarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0175A6D11A346ED200C1D1CE /* BarCell.m */; };
 		018284851A2BC57300DEBB81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284841A2BC57300DEBB81 /* main.m */; };
 		018284881A2BC57300DEBB81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284871A2BC57300DEBB81 /* AppDelegate.m */; };
@@ -26,8 +30,17 @@
 		018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018284941A2BC57300DEBB81 /* LaunchScreen.xib */; };
 		018284A21A2BC57300DEBB81 /* ProjetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284A11A2BC57300DEBB81 /* ProjetTests.m */; };
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
+		0187A7BB1A7801AB00546B28 /* Bars.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7B91A7801AB00546B28 /* Bars.png */; };
+		0187A7BC1A7801AC00546B28 /* Beers.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BA1A7801AB00546B28 /* Beers.png */; };
+		0187A7BE1A7802A100546B28 /* Infos.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BD1A7802A100546B28 /* Infos.png */; };
+		0187A7C11A7802DF00546B28 /* Plus plein.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BF1A7802DF00546B28 /* Plus plein.png */; };
+		0187A7C21A7802DF00546B28 /* Plus vide.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7C01A7802DF00546B28 /* Plus vide.png */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
+		0195245B1A7ACE0100918D2A /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0195245A1A7ACE0100918D2A /* View.xib */; };
 		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
+		01CE0BD21A781E3800081728 /* fond_ecran.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01CE0BD11A781E3800081728 /* fond_ecran.jpg */; };
+		01CE0BD61A78201100081728 /* fond_ecran_black.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01CE0BD51A78201100081728 /* fond_ecran_black.jpg */; };
+		01EF02B11A7FA89300762CCA /* Bar_fake.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01EF02B01A7FA89300762CCA /* Bar_fake.jpg */; };
 		01F875691A6662BA003E0267 /* BeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F875681A6662BA003E0267 /* BeerViewController.m */; };
 		EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E41A4035F8006F63D7 /* Beer.m */; };
 		EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E61A4035F8006F63D7 /* BeersViewController.m */; };
@@ -45,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01271F921A7F6F56002E02C5 /* splashscreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splashscreen.jpg; sourceTree = "<group>"; };
 		012B63F31A34613F002514A1 /* bar_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar_icon.jpg; sourceTree = "<group>"; };
 		012B63F51A346148002514A1 /* bar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar.jpg; sourceTree = "<group>"; };
 		012ECD291A6569D2001A6516 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
@@ -63,6 +77,9 @@
 		01690AF71A5C2E2F00761633 /* AvisCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvisCell.m; sourceTree = "<group>"; };
 		01690AF91A5C40F700761633 /* Avis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Avis.h; sourceTree = "<group>"; };
 		01690AFA1A5C410700761633 /* Avis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Avis.m; sourceTree = "<group>"; };
+		01734F5C1A7E617600BAF46C /* Leffe blonde.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Leffe blonde.jpg"; sourceTree = "<group>"; };
+		01734F5E1A7E61FB00BAF46C /* Rince cochon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Rince cochon.jpg"; sourceTree = "<group>"; };
+		01734F601A7E623100BAF46C /* Anosteké.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Anosteké.jpg"; sourceTree = "<group>"; };
 		0175A6D01A346EC600C1D1CE /* BarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarCell.h; sourceTree = "<group>"; };
 		0175A6D11A346ED200C1D1CE /* BarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarCell.m; sourceTree = "<group>"; };
 		0182847F1A2BC57300DEBB81 /* Projet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Projet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,10 +95,19 @@
 		018284A11A2BC57300DEBB81 /* ProjetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjetTests.m; sourceTree = "<group>"; };
 		018284AB1A2BC98000DEBB81 /* BarsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarsViewController.h; sourceTree = "<group>"; };
 		018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
+		0187A7B91A7801AB00546B28 /* Bars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bars.png; path = ../../../Downloads/Archive/Bars.png; sourceTree = "<group>"; };
+		0187A7BA1A7801AB00546B28 /* Beers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Beers.png; path = ../../../Downloads/Archive/Beers.png; sourceTree = "<group>"; };
+		0187A7BD1A7802A100546B28 /* Infos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Infos.png; path = ../../../Downloads/Infos.png; sourceTree = "<group>"; };
+		0187A7BF1A7802DF00546B28 /* Plus plein.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Plus plein.png"; path = "../../../Downloads/Archive-2/Plus plein.png"; sourceTree = "<group>"; };
+		0187A7C01A7802DF00546B28 /* Plus vide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Plus vide.png"; path = "../../../Downloads/Archive-2/Plus vide.png"; sourceTree = "<group>"; };
 		019092F11A2F68C3000664C8 /* Bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
+		0195245A1A7ACE0100918D2A /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		0198F1311A38DC2B001A6FFB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		01BE12851A363BEF002E1502 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		01CE0BD11A781E3800081728 /* fond_ecran.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fond_ecran.jpg; path = ../../fond_ecran.jpg; sourceTree = "<group>"; };
+		01CE0BD51A78201100081728 /* fond_ecran_black.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fond_ecran_black.jpg; sourceTree = "<group>"; };
+		01EF02B01A7FA89300762CCA /* Bar_fake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Bar_fake.jpg; sourceTree = "<group>"; };
 		01F875671A666287003E0267 /* BeerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeerViewController.h; sourceTree = "<group>"; };
 		01F875681A6662BA003E0267 /* BeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeerViewController.m; sourceTree = "<group>"; };
 		498BC474FF25960E63AB2A57 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +165,8 @@
 		018284811A2BC57300DEBB81 /* Projet */ = {
 			isa = PBXGroup;
 			children = (
+				01CE0BD01A781DBA00081728 /* Image */,
+				01CE0BCF1A781DAC00081728 /* Icon */,
 				EF88F5E31A4035F8006F63D7 /* Beer.h */,
 				EF88F5E41A4035F8006F63D7 /* Beer.m */,
 				015C27EA1A7555890074C3DA /* BeerAddController.h */,
@@ -152,6 +180,7 @@
 				018284861A2BC57300DEBB81 /* AppDelegate.h */,
 				018284871A2BC57300DEBB81 /* AppDelegate.m */,
 				0182848F1A2BC57300DEBB81 /* Main.storyboard */,
+				0195245A1A7ACE0100918D2A /* View.xib */,
 				0154F8DF1A6AC74C007EE224 /* BeerCell.h */,
 				0154F8E01A6AC75A007EE224 /* BeerCell.m */,
 				018284921A2BC57300DEBB81 /* Images.xcassets */,
@@ -203,6 +232,32 @@
 				018284A01A2BC57300DEBB81 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		01CE0BCF1A781DAC00081728 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				0187A7BF1A7802DF00546B28 /* Plus plein.png */,
+				0187A7C01A7802DF00546B28 /* Plus vide.png */,
+				0187A7BD1A7802A100546B28 /* Infos.png */,
+				0187A7B91A7801AB00546B28 /* Bars.png */,
+				0187A7BA1A7801AB00546B28 /* Beers.png */,
+			);
+			name = Icon;
+			sourceTree = "<group>";
+		};
+		01CE0BD01A781DBA00081728 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				01EF02B01A7FA89300762CCA /* Bar_fake.jpg */,
+				01271F921A7F6F56002E02C5 /* splashscreen.jpg */,
+				01734F601A7E623100BAF46C /* Anosteké.jpg */,
+				01734F5E1A7E61FB00BAF46C /* Rince cochon.jpg */,
+				01734F5C1A7E617600BAF46C /* Leffe blonde.jpg */,
+				01CE0BD51A78201100081728 /* fond_ecran_black.jpg */,
+				01CE0BD11A781E3800081728 /* fond_ecran.jpg */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 		92AD1580A6EA3E63F4B5ED25 /* Pods */ = {
@@ -312,8 +367,21 @@
 				012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */,
 				012B63F61A346148002514A1 /* bar.jpg in Resources */,
 				018284911A2BC57300DEBB81 /* Main.storyboard in Resources */,
+				01734F5D1A7E617600BAF46C /* Leffe blonde.jpg in Resources */,
+				0187A7BE1A7802A100546B28 /* Infos.png in Resources */,
+				0187A7C21A7802DF00546B28 /* Plus vide.png in Resources */,
+				0195245B1A7ACE0100918D2A /* View.xib in Resources */,
+				01734F611A7E623100BAF46C /* Anosteké.jpg in Resources */,
+				01EF02B11A7FA89300762CCA /* Bar_fake.jpg in Resources */,
+				01271F931A7F6F56002E02C5 /* splashscreen.jpg in Resources */,
+				0187A7BC1A7801AC00546B28 /* Beers.png in Resources */,
+				01CE0BD61A78201100081728 /* fond_ecran_black.jpg in Resources */,
+				0187A7BB1A7801AB00546B28 /* Bars.png in Resources */,
 				018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */,
+				01CE0BD21A781E3800081728 /* fond_ecran.jpg in Resources */,
 				018284931A2BC57300DEBB81 /* Images.xcassets in Resources */,
+				01734F5F1A7E61FB00BAF46C /* Rince cochon.jpg in Resources */,
+				0187A7C11A7802DF00546B28 /* Plus plein.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

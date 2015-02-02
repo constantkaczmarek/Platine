@@ -12,6 +12,8 @@
 #import "BarViewController.h"
 #import "BarCell.h"
 #import "Bar.h"
+#define keyIp @"http://localhost:8080"
+
 
 @interface BeerViewController()
 {
@@ -30,26 +32,34 @@
     [super viewDidLoad];
     
     self.BeerInfos.text = self.beer.infos;
-    self.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    //self.BeerImage.image = [UIImage imageNamed:@"bar_icon.jpg"];
+    
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadPhoto];
+        });
+    });
+                   
     self.title = self.beer.nom;
     self.BeerDegre.text = self.beer.degre;
     self.BeerRating.text = self.beer.rating;
     
-    [self configureRestKit];
+    //[self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
-    
+    locationManager.delegate = self;
+
     
     if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         
         [locationManager requestAlwaysAuthorization];
-        locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         [locationManager startUpdatingLocation];
-        currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
+        currentLocation = [[CLLocation alloc] initWithLatitude:50.6353821 longitude:3.0651736];
     }
 
-    [self loadBars];
+    //[self loadBars];
     [self.BeerNoter addTarget:self action:@selector(addNote:) forControlEvents:UIControlEventTouchUpInside];
 
     
@@ -95,7 +105,8 @@
 
     if (jsonData) {
         NSLog(@"Envoie en cours");
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/api/rest/rating/addVote"]];
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest/rating/addVote"]]];
+        
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
@@ -144,7 +155,7 @@
     
     cell.BarNom.text = bar.nom;
     cell.BarDistance.text = [NSString stringWithFormat:@"%.0f m",bar.distance];
-    cell.BarImage.image = [UIImage imageNamed:@"bar.jpg"];
+    cell.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
         
     return cell;
     
@@ -154,7 +165,7 @@
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [locationManager requestAlwaysAuthorization];
+    //[locationManager requestAlwaysAuthorization];
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [locationManager startUpdatingLocation];
@@ -187,7 +198,7 @@
 - (void)configureRestKit
 {
     // initialize AFNetworking HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"http://localhost:8080/api/rest"];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest"]];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     // initialize RestKit
@@ -201,6 +212,7 @@
                                                      @"rating":@"rating",
                                                      @"lat": @"lat",
                                                      @"lng": @"lng",
+                                                     @"photos.photo_reference": @"photo",
                                                     }];
     
     // register mappings with the provider using a response descriptor
@@ -218,8 +230,7 @@
     
     // NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
     
-    NSDictionary *queryParams = @{@"id" : self.beer.id,
-                                 };
+    NSDictionary *queryParams = @{@"id" : self.beer.id,};
     
     [[RKObjectManager sharedManager] getObjectsAtPath: @"barsForBeer"
                                            parameters:queryParams
@@ -232,6 +243,46 @@
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no bar?': %@", error);
                                               }];
+}
+
+/*- (void)loadPhoto:(Bar *)bar:(BarCell *)barcell
+{
+    
+    NSString *maxwith= @"150";
+    
+    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,bar.photo.firstObject,kKey];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
+                                                                              imageProcessingBlock:nil
+                                                                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                                                               barcell.BarImage.image = image;
+                                                                                               
+                                                                                           } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                               NSLog(@"%@", [error localizedDescription]);
+                                                                                           }];
+    
+    [operation start];
+    
+}*/
+
+- (void)loadPhoto{
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",keyIp,self.beer.img];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+     
+     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:nil
+     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+     
+        self.BeerImage.image = image;
+     
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+     NSLog(@"%@", [error localizedDescription]);
+     }];
+     
+     [operation start];
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

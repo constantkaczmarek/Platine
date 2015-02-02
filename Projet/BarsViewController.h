@@ -14,7 +14,7 @@
 #ifndef Projet_BarsViewController_h
 #define Projet_BarsViewController_h
 
-@interface BarsViewController : UITableViewController <CLLocationManagerDelegate,UISearchDisplayDelegate>
+@interface BarsViewController : UITableViewController <CLLocationManagerDelegate,UISearchDisplayDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     CLLocationManager* locationManager;
 }
@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *listBars;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *changeDistance;
 
 
 @end

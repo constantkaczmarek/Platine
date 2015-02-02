@@ -14,6 +14,7 @@
 #import <AFImageRequestOperation.h>
 #import <RestKit/RestKit.h>
 #import "Beer.h"
+#define keyIp @"http://localhost:8080"
 
 @interface BeerAddController()
 {
@@ -28,6 +29,14 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
+    self.BeerImage.layer.cornerRadius = 1.0f;
+    self.BeerImage.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.BeerImage.layer.borderWidth = 1.0f;
+    
+    self.BeerInfos.layer.cornerRadius = 1.0f;
+    self.BeerInfos.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.BeerInfos.layer.borderWidth = 1.0f;
+    
     [self.BeerAdd setEnabled:FALSE];
     [self.BeerChoosePhoto addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.BeerAdd addTarget:self action:@selector(addBeer:) forControlEvents:UIControlEventTouchUpInside];
@@ -51,20 +60,16 @@
     UIImage *beerImage = image;
     self.BeerImage.image = beerImage;
     
-    //[self addImage:beerImage];
-
     NSDictionary *params = @{@"file":@"imageName",};
     
     NSData *imageData = UIImageJPEGRepresentation(beerImage, 0.5);
     
-    /*[params setObject:@"myUserName" forKey:@"username"];
-    [params setObject:@"1234" forKey:@"password"];*/
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/createBeer"]];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.10.4:8080/createBeer"]];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     
-    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:nil parameters:nil constructingBodyWithBlock: ^(id <AFMultipartFormData>formData){
+    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:[NSString stringWithFormat:@"%@%@",keyIp,@"/createBeer"] parameters:nil constructingBodyWithBlock: ^(id <AFMultipartFormData>formData){
                       [formData appendPartWithFileData:imageData name:@"file" fileName:@"request.jpg" mimeType:@"image/jpg"];
     }];
     
@@ -112,7 +117,8 @@
     
     if (jsonData) {
         NSLog(@"Envoie en cours");
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://172.19.158.13:8080/api/rest/beerRequest/create"]];
+        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",keyIp,@"/api/rest/beerRequest/create"]]];
+        
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         
         NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
@@ -141,7 +147,6 @@
     } else {
         NSLog(@"Impossible de sérializer %@: %@", json, erreur);
     }
-    
 }
 
 @end

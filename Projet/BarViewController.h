@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) Bar *bar;
 
-@property (weak, nonatomic) IBOutlet MKMapView *BarMap;
 @property (weak, nonatomic) IBOutlet UILabel *BarDistance;
 @property (weak, nonatomic) IBOutlet UILabel *BarAdresse;
 @property (weak, nonatomic) IBOutlet UITextView *BarTel;
@@ -29,6 +28,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *BarRating;
 @property (weak, nonatomic) IBOutlet UILabel *BarSite;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UIButton *BarTelButton;
+@property (weak, nonatomic) IBOutlet UIButton *BarAdresseButton;
+@property (weak, nonatomic) IBOutlet UIButton *BarSiteButton;
+@property (weak, nonatomic) IBOutlet UIButton *BarBeers;
+@property (weak, nonatomic) IBOutlet UIButton *BarAvis;
+@property (weak, nonatomic) IBOutlet UIButton *BarMap;
+@property (weak, nonatomic) IBOutlet UIView *WhiteRect;
 
 
 @end

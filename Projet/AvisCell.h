@@ -14,7 +14,7 @@
 @interface AvisCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *AvisAuteur;
-@property (weak, nonatomic) IBOutlet UITextView *AvisText;
+@property (weak, nonatomic) IBOutlet UILabel *AvisText;
 @property (weak, nonatomic) IBOutlet UILabel *AvisTime;
 @property (weak, nonatomic) IBOutlet UILabel *AvisRating;
 

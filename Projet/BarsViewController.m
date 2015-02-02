@@ -10,6 +10,8 @@
 #import <RestKit/RestKit.h>
 #import "BarsViewController.h"
 #import "BarCell.h"
+#import <ActionSheetPicker-3.0/ActionSheetStringPicker.h>
+#import <ActionSheetPicker-3.0/ActionSheetDistancePicker.h>
 #define kKey @"AIzaSyCiKxji5wKw7RDAzKcIWDzTl2eqDv7ilfY"
 
 
@@ -22,7 +24,12 @@
     NSArray *_bars;
     UIActivityIndicatorView *indicator;
     NSCache *barsCache;
-    UIRefreshControl *refreshControl;
+    NSString *distance;
+    NSArray *listeDistance;
+    NSString *pathJson;
+    bool byName;
+    bool isFilt;
+    //UIRefreshControl *refreshControl;
 }
 
 @end
@@ -51,12 +58,16 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     barsCache = [[NSCache alloc] init];
+    distance = @"500";
+    listeDistance = [NSArray arrayWithObjects:@"500",@"1000",@"5000",nil];
+    byName = false;
     
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"fond_ecran_black.jpg"]];
+
     
     //Geolocalisation et chargement des bars
     [self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
-    
     
     if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
 
@@ -65,51 +76,85 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         [locationManager startUpdatingLocation];
-        currentLocation = [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)locationManager.location.coordinate.latitude longitude:(CLLocationDegrees)locationManager.location.coordinate.longitude];
+        currentLocation = [[CLLocation alloc] initWithLatitude:50.6353821 longitude:3.0651736];
     }
     
 
     self.navigationItem.title = @"Bars";
     [self loadBars];
     
+    isFilt = false;
     
     //Action refresh
     self.refreshBar.target = self;
     self.refreshBar.action = @selector(refresh:);
+    
+    //Action changer distance
+    self.changeDistance.target = self;
+    self.changeDistance.action = @selector(changeDistance:);
 
 }
 
+
+#pragma actions boutons
 - (IBAction)refresh:(id)sender{
+    byName = false;
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
     [self loadBars];
+}
+
+- (IBAction)changeDistance:(id)sender{
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager startUpdatingLocation];
     
+    [ActionSheetStringPicker showPickerWithTitle:@"Distance (m)"
+                                            rows:listeDistance
+                                initialSelection:0
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                           distance = selectedValue;
+                                           [self loadBars];
+                                       }
+                                     cancelBlock:nil
+                                          origin:sender];
 }
 
-#pragma mark - Configuration de la table view
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 91.0;
+-(IBAction)searchNameBar:(id)sender{
+    byName = true;
+    //[self configureRestKit];
+    
+    self.searchDisplayController.searchResultsTableView.canCancelContentTouches = TRUE;
+    
+    //[self loadBars];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(BarCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+#pragma configuration de la table view
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 83.0f;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(tableView == self.searchDisplayController.searchResultsTableView) {
+        if(searchResults.count == 0){
+            
+            //Création du bouton de recherche de bar par nom
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [button addTarget:self
+                       action:@selector(searchNameBar:)
+             forControlEvents:UIControlEventTouchUpInside];
+            [button setTitle:@"Rechercher par nom" forState:UIControlStateNormal];
+            button.tintColor = [UIColor colorWithRed:167.0/255.0f green:7.0/255.0f blue:20.0/255.0f alpha:1];
+            button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+            self.searchDisplayController.searchResultsTableView.backgroundView = button;
+            self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
         return searchResults.count;
     } else {
         return _bars.count;
     }
 }
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -126,28 +171,26 @@
         bar = [_bars objectAtIndex:indexPath.row];
     }
     
-    /*dispatch_async(dispatch_get_global_queue(0,0), ^{
-        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: bar.icon]];
-        if ( data == nil )
-            return;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.BarImage.image = [UIImage imageWithData: data];
-        });
-    });*/
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: bar.icon]];
-        if ( bar.photo == nil ){
-            if ( data == nil )
-                return;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.BarImage.image = [UIImage imageWithData: data];
-            });
+    if([bar.nom isEqualToString:@"Circus"]){
+        cell.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
+        
+    }else {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: bar.icon]];
+            if ( bar.photo == nil ){
+                if ( data == nil )
+                    return;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.BarImage.image = [UIImage imageWithData: data];
+                });
             }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self loadPhoto:bar :cell];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self loadPhoto:bar :cell];
+            });
         });
-    });
+
+    }
+    
     
     cell.BarNom.text = bar.nom;
     cell.BarDistance.text = [NSString stringWithFormat:@"%.0f m",bar.getDistance];
@@ -177,6 +220,15 @@
     return YES;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView{
+    
+}
+
 #pragma mark - Configuration de la géolocalistion
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -195,15 +247,36 @@
 - (void)sortBarsByDistance
 {
     
+    //NSString *loc = [NSString stringWithFormat:@"%f,%f",50.6277520,3.0569518];
+    //CLLocation *loc = [[CLLocation alloc]initWithLatitude:50.6277520 longitude:3.0569518];
+ 
     for (Bar* b in _bars) {
-        
         CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) b.lat) longitude:((CLLocationDegrees)b.lng)];
         CLLocationDistance d = [barLocation distanceFromLocation:locationManager.location];
         b.distance = d;
     }
     
+    /*NSMutableArray *ba = [NSMutableArray arrayWithArray:_bars];
+    
+    Bar *b = [[Bar alloc] init];
+    b.nom = @"Circus";
+    b.distance = 100;
+    b.id = @"ChIJDSF01ITVwkcRRBMkZm-IoeU";
+    
+    [ba addObject:b];
+   
+    
+    Bar *b1 = [[Bar alloc] init];
+    b1.nom = @"Pub Mac Ewan's";
+    b1.distance = 200;
+    b1.id = @"ChIJWzlxLpvVwkcRFYOUkbc7xnU";
+    b.photo = [NSArray arrayWithObjects:@"CnRnAAAAR55VY6-Y4Ww2ETLeD6MloHMBbgSam48WpuD_kK3Kc-Dtf1vk4j4wk6G3QnPFAmI_om8p8cpMAEV5Tdrou_0P_699tdk0yUZSSyKRUnXUT0j7IW3ACQQia6aTVRKyoiMDQ9MzzmkAjwiJ2IZmqD9cyxIQJgaifKpO-YfFJWAup_K9BRoUjZPWBPNsuyVFWdyQZysPG88TYCg", nil] ;
+    
+    [ba addObject:b1];*/
+    
     NSArray *descriptor = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]];
     _bars = [_bars sortedArrayUsingDescriptors:descriptor];
+    
     
     [self.tableView reloadData];
 }
@@ -211,11 +284,15 @@
 
 #pragma mark - Configuration des requêtes REST
 
+-(void)configureRestKit{
 
-- (void)configureRestKit
-{
-    // initialize AFNetworking HTTPClient
     NSURL *baseURL = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place"];
+    if (byName) {
+        pathJson = @"textsearch/json";
+    } else {
+        pathJson = @"nearbysearch/json";
+    }
+    
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     // initialize RestKit
@@ -236,7 +313,7 @@
     // register mappings with the provider using a response descriptor
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:barMapping
                                                                                             method:RKRequestMethodGET
-                                                                                       pathPattern:@"nearbysearch/json"
+                                                                                       pathPattern:pathJson
                                                                                            keyPath:@"results"
                                                                                        statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
@@ -256,28 +333,33 @@
     [self.view addSubview:indicator];
     [indicator startAnimating];
     
+    
+    //Recalcule du location manager
     locationManager = [[CLLocationManager alloc] init];
-
     [locationManager startUpdatingLocation];
     
-    NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
-    //NSString *loc = [NSString stringWithFormat:@"%f,%f",50.6353821,3.0651736];
+    //NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
+    NSString *loc = [NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude];
     NSString *key = kKey;
+    NSDictionary *queryParams = nil;
     
-    NSDictionary *queryParams = @{@"location" : loc,
-                                  @"radius" : @"500",
-                                  @"types" : @"bar",
-                                  //@"name" : @"Lille",
-                                  @"key" : key};
+    if (byName) {
+        queryParams= @{@"query" : self.searchBar.text,
+                       @"key" : key};
+    }else {
+        queryParams= @{@"location" : loc,
+                       @"radius" :distance,
+                       @"types" : @"bar",
+                       //@"name" : @"Lille",
+                       @"key" : key};
+    }
     
     //méthode asynchrone à cet endroit la
-    
-    [[RKObjectManager sharedManager] getObjectsAtPath: @"nearbysearch/json"
+    [[RKObjectManager sharedManager] getObjectsAtPath: pathJson
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   _bars = mappingResult.array;
-                                                  
-                                                  
+
                                                   if(barsCache == nil){
                                                       [barsCache setObject: _bars forKey: @"listBars"];
                                                       NSLog(@"cache rempli");
@@ -343,9 +425,21 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([[segue identifier] isEqualToString:@"detailSegue"]){
-        NSInteger selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
+        NSInteger selectedIndex;
+        if(isFilt){
+            selectedIndex =  [[self.searchDisplayController.searchResultsTableView indexPathForSelectedRow] row];
+        }else
+        {
+            selectedIndex =  [[self.tableView indexPathForSelectedRow] row];
+        }
         BarViewController *bvc = [segue destinationViewController];
-        bvc.bar = [_bars objectAtIndex:selectedIndex];
+        if(isFilt){
+            bvc.bar = [searchResults objectAtIndex:selectedIndex];
+            self.searchDisplayController.active = NO;
+            
+        }else{
+            bvc.bar = [_bars objectAtIndex:selectedIndex];
+        }
     }
 }
 

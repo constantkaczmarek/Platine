@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *BarNom;
 @property (weak, nonatomic) IBOutlet UIImageView *BarImage;
 @property (weak, nonatomic) IBOutlet UILabel *BarDistance;
+@property (nonatomic, strong) UIView *line;
+
 
 @end
 

@@ -15,6 +15,8 @@
 
 @property (nonatomic, retain) NSString *id;
 @property (nonatomic, retain) NSString *nom;
+@property (nonatomic, retain) NSString *icon;
+@property (nonatomic, retain) NSString *img;
 @property (nonatomic, retain) NSString *degre;
 @property (nonatomic, retain) NSString *type;
 @property (nonatomic, retain) NSString *rating;
