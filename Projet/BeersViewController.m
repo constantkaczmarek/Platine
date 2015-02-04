@@ -268,6 +268,7 @@ const char keyAlert;
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no beers?': %@", error);
+                                                  [indicator stopAnimating];
                                               }];
     
 }

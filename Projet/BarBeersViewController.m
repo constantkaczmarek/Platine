@@ -97,8 +97,7 @@
 
 - (void)loadBeers
 {
-    NSDictionary *queryParams = @{@"placeId" : self.bar.placeid,
-                                  };
+    NSDictionary *queryParams = @{@"placeId" : self.bar.placeid,};
     
     [[RKObjectManager sharedManager] getObjectsAtPath: @"beersForPlaceId"
                                            parameters: queryParams
@@ -114,8 +113,6 @@
 
 - (void)loadPhoto:(Beer *)beer:(BeerCell *)beercell
 {
-    
-    NSString *maxwith= @"150";
     
     NSString *url = [NSString stringWithFormat:@"%@%@",keyIp,beer.icon];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];

@@ -123,7 +123,7 @@
     byName = true;
     //[self configureRestKit];
     
-    self.searchDisplayController.searchResultsTableView.canCancelContentTouches = TRUE;
+    self.searchDisplayController.active = NO;
     
     //[self loadBars];
 }
@@ -150,8 +150,10 @@
             self.searchDisplayController.searchResultsTableView.backgroundView = button;
             self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         }
+        isFilt=true;
         return searchResults.count;
     } else {
+        isFilt=false;
         return _bars.count;
     }
 }

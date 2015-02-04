@@ -136,7 +136,7 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.98039215686274506" green="0.98431372549019602" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98431372549019602" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="BarDistance" destination="wNO-4o-bCG" id="ZMw-CE-8Vs"/>
                                     <outlet property="BarImage" destination="pbt-RP-QFE" id="qGI-jZ-MHP"/>
@@ -1025,9 +1025,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="246" width="400" height="354"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="Wwl-ZZ-0Pp" id="4di-jf-zgo"/>
                                     <outlet property="delegate" destination="Wwl-ZZ-0Pp" id="FCB-Xi-ljE"/>
@@ -1448,8 +1445,7 @@
                                         <exclude reference="ewa-iS-Ku8"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="16" y="65" width="181" height="21"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="Nei-gi-ly8"/>
                                         <include reference="ewa-iS-Ku8"/>
@@ -1462,7 +1458,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="368" id="hSN-cX-Koh"/>
                                 </constraints>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <variation key="default">
@@ -1470,8 +1466,7 @@
                                         <exclude reference="hSN-cX-Koh"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="8" y="94" width="368" height="449"/>
+                                <variation key="widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="hSN-cX-Koh"/>
                                     </mask>
@@ -1957,7 +1952,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0oF-Sc-Eoa" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="+" image="Plus vide.png" id="USd-7y-QIt"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yd5-dR-4eI">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="yd5-dR-4eI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.65490196079999996" green="0.027450980390000001" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -2003,8 +1998,8 @@
         <image name="Plus vide.png" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Q1-4A-bKW"/>
-        <segue reference="adR-UM-CJw"/>
+        <segue reference="HWI-N9-gX8"/>
         <segue reference="yl7-nl-gGj"/>
+        <segue reference="adR-UM-CJw"/>
     </inferredMetricsTieBreakers>
 </document>
