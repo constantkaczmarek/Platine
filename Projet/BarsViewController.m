@@ -27,6 +27,7 @@
     NSString *distance;
     NSArray *listeDistance;
     NSString *pathJson;
+    NSString *nameSearch;
     bool byName;
     bool isFilt;
     //UIRefreshControl *refreshControl;
@@ -101,6 +102,7 @@
     byName = false;
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
+    [self configureRestKit];
     [self loadBars];
 }
 
@@ -121,11 +123,10 @@
 
 -(IBAction)searchNameBar:(id)sender{
     byName = true;
-    //[self configureRestKit];
-    
+    nameSearch = self.searchBar.text;
     self.searchDisplayController.active = NO;
-    
-    //[self loadBars];
+    [self configureRestKit];
+    [self loadBars];
 }
 
 #pragma configuration de la table view
@@ -289,11 +290,8 @@
 -(void)configureRestKit{
 
     NSURL *baseURL = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place"];
-    if (byName) {
-        pathJson = @"textsearch/json";
-    } else {
-        pathJson = @"nearbysearch/json";
-    }
+ 
+    pathJson = @"nearbysearch/json";
     
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
@@ -325,6 +323,12 @@
 - (void)loadBars
 {
     //Spinner lors du chargement
+    if(byName){
+        self.title = [NSString stringWithFormat:@"Resultat de \"%@\"",nameSearch];
+    }else{
+        self.title = @"Bars";
+    }
+    
     UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     activityContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.25];
     indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2) - 40, (self.view.frame.size.height/2) - 40, 80, 80)];
@@ -346,7 +350,10 @@
     NSDictionary *queryParams = nil;
     
     if (byName) {
-        queryParams= @{@"query" : self.searchBar.text,
+        queryParams= @{@"name" : nameSearch,
+                       @"types":@"bar",
+                       @"location":loc,
+                       @"radius":@"10000",
                        @"key" : key};
     }else {
         queryParams= @{@"location" : loc,
