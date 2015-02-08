@@ -10,7 +10,7 @@
 #define Projet_BeerAddController_h
 #import <UIKit/UIKit.h>
 
-@interface BeerAddController : UIViewController <UIImagePickerControllerDelegate>
+@interface BeerAddController : UIViewController <UIImagePickerControllerDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *BeerNom;
 @property (weak, nonatomic) IBOutlet UITextField *BeerDegre;
 @property (weak, nonatomic) IBOutlet UITextField *BeerType;

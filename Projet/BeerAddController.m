@@ -27,7 +27,6 @@
 
 @implementation BeerAddController
 
-
 #pragma mark - Initialisation de la vue
 - (void) viewDidLoad{
     [super viewDidLoad];
@@ -40,19 +39,41 @@
     self.BeerInfos.layer.cornerRadius = 1.0f;
     self.BeerInfos.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.BeerInfos.layer.borderWidth = 1.0f;
-    
-    
+
     //Désactivation du bouton d'ajout de bière
     [self.BeerAdd setEnabled:FALSE];
+    
+    //Placeholder textview
+    self.BeerInfos.delegate = self;
+    self.BeerInfos.text = @"Informations sur la bière";
+    self.BeerInfos.textColor = [UIColor lightGrayColor];
     
     //Ajout des actions aux différents boutons
     [self.BeerChoosePhoto addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.BeerAdd addTarget:self action:@selector(addBeer:) forControlEvents:UIControlEventTouchUpInside];
     
+    
 }
 
 -(void) didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Placeholder textview
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Informations sur la bière"]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor];
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Informations sur la bière";
+        textView.textColor = [UIColor lightGrayColor];
+    }
 }
 
 
@@ -93,8 +114,9 @@
                                              idRequest = [NSString stringWithFormat:@"%@",[resp objectForKey:@"id"]];
 
                                              //Activation du bouton d'ajout de bière
+                                             [self.BeerAdd setTitleColor:[UIColor colorWithRed:167.0/255.0f green:7.0/255.0f blue:20.0/255.0f alpha:1] forState:UIControlStateNormal];
                                              [self.BeerAdd setEnabled:TRUE];
-                                             
+
                                              //Notification à l'utilisateur que l'opération est un succès.
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Informations" message:@"Transfert de l'image réussi." delegate:self cancelButtonTitle:@"Fermer" otherButtonTitles: nil];
                                              [alert show];

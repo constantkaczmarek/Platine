@@ -74,14 +74,16 @@
     locationManager = [[CLLocationManager alloc] init];
     
     //Autorisation de géolocaliser l'utilisateur
-    if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
 
         [locationManager requestAlwaysAuthorization];
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         //Mise à jour de la localisation de l'utilisateur
-        [locationManager startUpdatingLocation];
+        while (locationManager.location.coordinate.latitude == 0) {
+            [locationManager startUpdatingLocation];
+        }
         currentLocation = [[CLLocation alloc] initWithLatitude:50.6353821 longitude:3.0651736];
     }
     

@@ -53,7 +53,7 @@
     locationManager.delegate = self;
 
     //Autorisation de géolocaliser l'utilisateur
-    if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         
         [locationManager requestAlwaysAuthorization];
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -144,7 +144,6 @@
     } else {
         NSLog(@"Impossible de sérializer %@: %@", json, erreur);
     }
-    
 }
 
 

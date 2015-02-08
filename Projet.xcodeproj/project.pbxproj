@@ -14,7 +14,7 @@
 		015495DA1A364D710055F3D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BE12851A363BEF002E1502 /* MapKit.framework */; };
 		0154F8E11A6AC75A007EE224 /* BeerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0154F8E01A6AC75A007EE224 /* BeerCell.m */; };
 		015C10F01A66C2AE00147135 /* BarBeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015C10EF1A66C2AE00147135 /* BarBeersViewController.m */; };
-		015C27EC1A7555960074C3DA /* BarAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015C27EB1A7555960074C3DA /* BarAddController.m */; };
+		015C27EC1A7555960074C3DA /* BeerAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015C27EB1A7555960074C3DA /* BeerAddController.m */; };
 		015DFD0E1A33786400E600E1 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015DFD0D1A33786400E600E1 /* BarViewController.m */; };
 		01690AF51A5C2C9700761633 /* BarAvisController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AF41A5C2C9700761633 /* BarAvisController.m */; };
 		01690AF81A5C2E2F00761633 /* AvisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01690AF71A5C2E2F00761633 /* AvisCell.m */; };
@@ -68,7 +68,7 @@
 		015C10EE1A66C27C00147135 /* BarBeersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarBeersViewController.h; sourceTree = "<group>"; };
 		015C10EF1A66C2AE00147135 /* BarBeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarBeersViewController.m; sourceTree = "<group>"; };
 		015C27EA1A7555890074C3DA /* BeerAddController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeerAddController.h; sourceTree = "<group>"; };
-		015C27EB1A7555960074C3DA /* BarAddController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarAddController.m; sourceTree = "<group>"; };
+		015C27EB1A7555960074C3DA /* BeerAddController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeerAddController.m; sourceTree = "<group>"; };
 		015DFD0D1A33786400E600E1 /* BarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarViewController.m; sourceTree = "<group>"; };
 		015DFD101A33788F00E600E1 /* BarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarViewController.h; sourceTree = "<group>"; };
 		01690AF31A5C2C2E00761633 /* BarAvisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarAvisController.h; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 				EF88F5E31A4035F8006F63D7 /* Beer.h */,
 				EF88F5E41A4035F8006F63D7 /* Beer.m */,
 				015C27EA1A7555890074C3DA /* BeerAddController.h */,
-				015C27EB1A7555960074C3DA /* BarAddController.m */,
+				015C27EB1A7555960074C3DA /* BeerAddController.m */,
 				EF88F5E51A4035F8006F63D7 /* BeersViewController.h */,
 				EF88F5E61A4035F8006F63D7 /* BeersViewController.m */,
 				01F875671A666287003E0267 /* BeerViewController.h */,
@@ -447,7 +447,7 @@
 				01F875691A6662BA003E0267 /* BeerViewController.m in Sources */,
 				012ECD2A1A6569D2001A6516 /* MapViewController.m in Sources */,
 				01690AFB1A5C410700761633 /* Avis.m in Sources */,
-				015C27EC1A7555960074C3DA /* BarAddController.m in Sources */,
+				015C27EC1A7555960074C3DA /* BeerAddController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

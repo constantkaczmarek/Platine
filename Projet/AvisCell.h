@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *AvisText;
 @property (weak, nonatomic) IBOutlet UILabel *AvisTime;
 @property (weak, nonatomic) IBOutlet UILabel *AvisRating;
+@property (weak, nonatomic) IBOutlet UITextView *AvisTexte;
 
 @end
 

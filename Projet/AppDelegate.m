@@ -28,8 +28,8 @@
     UIBarButtonItem *barButtonAppearance = [UIBarButtonItem appearance];
     [barButtonAppearance setTintColor:[UIColor redColor]]; // Change to your colour
     */
-    [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
 
+     [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithRed:167.0/255.0f green:7.0/255.0f blue:20.0/255.0f alpha:1]];
 
     return YES;
 }
