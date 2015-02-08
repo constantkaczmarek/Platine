@@ -16,6 +16,7 @@
 {
     [super layoutSubviews];
     
+    //Mise en forme de l'image d'une cellule bière des tableview
     self.BeerImage.layer.cornerRadius = self.BeerImage.frame.size.height /2;
     self.BeerImage.layer.masksToBounds = YES;
     self.BeerImage.layer.shadowOpacity = .5;

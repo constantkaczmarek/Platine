@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
+//Objet bière utilisé dans l'ensemble de l'application
 @interface Beer : NSObject
 
 @property (nonatomic, retain) NSString *id;

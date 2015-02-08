@@ -24,37 +24,47 @@
 @synthesize BarMap;
 
 
+#pragma mark - Initialisation de la vue lorsqu'elle est chargée
+
 -(void)viewDidLoad{
     
     [super viewDidLoad];
+    
+    //Affectation des informations disponibles aux différents composants de la vue
     self.Title.title = self.bar.nom;
     self.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
     self.BarDistance.text = [NSString stringWithFormat:@"%.0f m",self.bar.distance];
     
+    //Chargement de la photo du bar
     [self loadPhoto];
 
+    
+    /*
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     // Autorisation
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
+     */
     
+    /*
     [self.view addSubview:self.WhiteRect];
-    
     [self.view sendSubviewToBack:self.WhiteRect];
+     */
     
+    //Chargement des détails du bar
     [self configureRestKit];
     [self loadBar];
 }
 
+
+#pragma mark - Action des différents boutons liés aux informations du bar
 -(IBAction)call:(id)sender{
-    NSLog(@"ca marche");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.bar.tel]];
 }
 
 -(IBAction)openSite:(id)sender{
-    NSLog(@"ca marche");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.bar.site]];
 }
 
@@ -69,14 +79,15 @@
 
 - (void)configureRestKit
 {
+    // Initialisation de restkit
     NSURL *baseURL = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place"];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    
     [RKObjectManager sharedManager].HTTPClient = client;
 
     // setup object mappings
     RKObjectMapping *barMapping = [RKObjectMapping mappingForClass:[Bar class]];
     
+    //Configuration du mapping de la réponse du serveur afin de récupérer un objet bar
     [barMapping addAttributeMappingsFromDictionary:@{
                                                      @"id": @"id",
                                                      @"place_id": @"placeid",
@@ -98,28 +109,32 @@
                                                      }];
     
     
-    // register mappings with the provider using a response descriptor
+    //Création de la réponse configurée avec le mapping
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:barMapping
                                                                                             method:RKRequestMethodGET
                                                                                        pathPattern:@"details/json"
                                                                                            keyPath:@"result"
                                                                                        statusCodes:[NSIndexSet indexSetWithIndex:200]];
 
-
+    //Ajout de la description de la réponse au manager de requêtes restkit
     [[RKObjectManager sharedManager] addResponseDescriptor:responseDescriptor];
 }
 
 - (void)loadBar
 {
 
+    //Configuration des paramètres
     NSString *key = kKey;
     NSDictionary *queryParams = @{@"placeid" : self.bar.id,
                                   @"key" : key};
     
+    //Exécution de la requête et récupération de l'objet bar
     [[RKObjectManager sharedManager] getObjectsAtPath: @"details/json"
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.bar = mappingResult.firstObject;
+                                                  
+                                                  //Affectation des informations récupérées aux différents composants de la vue
                                                   self.BarRating.text =  [NSString stringWithFormat:@"%@ sur %@ avis",self.bar.rating,self.bar.nbrating];
                                                   
                                                   [self.BarTelButton setTitle:self.bar.tel forState:UIControlStateNormal];
@@ -141,11 +156,12 @@
 - (void)loadPhoto
 {
  
+    //Configuration des paramètres de la requête
     NSString *maxwith= @"400";
-    
     NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,self.bar.photo.firstObject,kKey];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
+    //Configuration des réponses de la requête
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                                               imageProcessingBlock:nil
                                                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -154,14 +170,18 @@
                                                                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                                                                 NSLog(@"%@", [error localizedDescription]);
                                                                             }];
-    
+    //Exécution de la requête
     [operation start];
 
 }
 
+
+#pragma mark - Transmission de l'objet bar
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
 
+    //Transmission de l'objet bar selon le bouton cliqué
     if([[segue identifier] isEqualToString:@"barBeersSegue"]){
         BarBeersViewController *bivc = [segue destinationViewController];
         bivc.bar = self.bar;

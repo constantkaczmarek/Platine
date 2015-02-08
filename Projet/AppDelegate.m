@@ -23,12 +23,12 @@
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
     
-    //[[UILabel appearance] setFont:[UIFont fontWithName:@"Helvitica" ]];
+    /*[[UILabel appearance] setFont:[UIFont fontWithName:@"Helvitica" ]];
     
     UIBarButtonItem *barButtonAppearance = [UIBarButtonItem appearance];
     [barButtonAppearance setTintColor:[UIColor redColor]]; // Change to your colour
-    
-    [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
+    */
+    [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
 
 
     return YES;

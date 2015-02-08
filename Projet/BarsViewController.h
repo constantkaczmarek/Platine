@@ -14,7 +14,7 @@
 #ifndef Projet_BarsViewController_h
 #define Projet_BarsViewController_h
 
-@interface BarsViewController : UITableViewController <CLLocationManagerDelegate,UISearchDisplayDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface BarsViewController : UITableViewController <CLLocationManagerDelegate,UISearchDisplayDelegate>
 {
     CLLocationManager* locationManager;
 }

@@ -18,14 +18,8 @@
 @implementation Bar
 @synthesize distance;
 
--(void)initBiere{
-    
-    [bieres addObject:@"Leffe"];
-    [bieres addObject:@"Heinek"];
-    [bieres addObject:@"Delirium"];
-    [bieres addObject:@"et plein d'autres"];
 
-}
+#pragma mark - Configuration de l'annotation du bar sur la mapview
 
 - (NSString *)title {
     return self.nom;
@@ -49,6 +43,7 @@
 }
 
 
+#pragma mark - Calcul de la distance entre le bar et une autre position
 
 -(void)calculDistance:(CLLocation *)start{
     
@@ -56,11 +51,6 @@
     CLLocationDistance d = [barLocation distanceFromLocation:start];
     distance = d;
 }
-
-/*-(NSComparisonResult)compare:(Bar *)otherObject{
-    return [self.getDistance compare:otherObject.get];
-}*/
-
 
 
 @end
