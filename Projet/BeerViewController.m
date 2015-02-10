@@ -9,19 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
 #import "BeerViewController.h"
-#import "BarViewController.h"
 #import "BarCell.h"
 #import "Bar.h"
 #define keyIp @"http://localhost:8080"
-
 
 @interface BeerViewController()
 {
     NSArray *bars;
     NSMutableArray *sortedBars;
-    CLLocation *currentLocation;
-    UITextField *noteField;
-
+    DXStarRatingView *note;
+    NSNumber *noteRating;
 }
 @end
 
@@ -43,26 +40,16 @@
     //Affectation des informations aux différents composants de la vue
     self.BeerInfos.text = self.beer.infos;
     self.title = self.beer.nom;
-    self.BeerDegre.text = self.beer.degre;
-    self.BeerRating.text = self.beer.rating;
+    self.BeerDegre.text = [NSString stringWithFormat:@"%@ °",self.beer.degre];
+    [self.BeerInfos scrollRangeToVisible:NSMakeRange(0, 0)];
+    self.BeerType.text = self.beer.type;
+
+    [self.RatingBar setStars:(int)lroundf(self.beer.rating.floatValue) callbackBlock:^(NSNumber *newRating)
+     { NSLog(@"didChangeRating: %@",newRating);
+    }];
     
     [self configureRestKit];
     
-    //Configuration et récupération de la position actuelle
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-
-    //Autorisation de géolocaliser l'utilisateur
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        
-        [locationManager requestAlwaysAuthorization];
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationManager.distanceFilter = kCLDistanceFilterNone;
-        //Mise à jour de la localisation de l'utilisateur
-        [locationManager startUpdatingLocation];
-        currentLocation = [[CLLocation alloc] initWithLatitude:50.6353821 longitude:3.0651736];
-    }
-
     //Chargement des bars associés à la bière
     [self loadBars];
     
@@ -82,12 +69,19 @@
 - (IBAction)addNote:(id)sender{
     
     //Alerte permettant d'ajouter une note à la bière
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:self.beer.nom message:@"Inscrivez votre note ci-dessous. \n\n\n" delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Noter", nil];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:self.beer.nom message:@"Inscrivez votre note ci-dessous." delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Noter", nil];
     
     //Ajout d'un champs pour inscrire la note
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField* tf = [alert textFieldAtIndex:0];
-    tf.keyboardType = UIKeyboardTypeNumberPad;
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(50, 0, 80, 40)];
+    [alert setValue:v forKey:@"accessoryView"];
+    
+    note = [[DXStarRatingView alloc] initWithFrame:CGRectMake(70, 0, 80, 40)];
+    [note setStars:self.beer.rating.intValue callbackBlock:^(NSNumber *newRating)
+     {
+         noteRating = newRating;
+         NSLog(@"didChangeRating: %@",newRating);
+     }];
+    [v addSubview:note];
     
     [alert show];
 }
@@ -97,11 +91,11 @@
     //Si clique sur bouton noter, envoie de la note au serveur
     if (buttonIndex==1) {
         NSString *note = [alertView textFieldAtIndex:0].text;
-        [self sendNote:self.beer :note];
+        [self sendNote:self.beer :noteRating];
     }
 }
 
-- (void) sendNote:(Beer *)beer:(NSString *)note{
+- (void) sendNote:(Beer *)beer:(NSNumber *)note{
     
     //Récupération d'un identifiant unique pour ne pas noter pluieurs fois la même bière
     NSUUID *id_unique = [[UIDevice currentDevice] identifierForVendor];
@@ -169,34 +163,28 @@
     //Affectation des données aux composants de la cellule
     cell.BarNom.text = bar.nom;
     cell.BarDistance.text = [NSString stringWithFormat:@"%.0f m",bar.distance];
-    cell.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
-        
+    
+    //Chargement des icones en mode asynchrone
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadPhotoBar:bar :cell];
+        });
+    });
+
+
     return cell;
     
 }
 
 #pragma mark - Configuration de la géolocalistion
 
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    //Paramètres de récupération de la position de l'utilisateur
-    [locationManager requestAlwaysAuthorization];
-    [locationManager setDistanceFilter:kCLDistanceFilterNone];
-    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [locationManager startUpdatingLocation];
-    locationManager = locations.lastObject;
-    if(locationManager == nil){
-        [locationManager startUpdatingLocation];
-    }
-    
-}
 
 - (void)sortBarsByDistance
 {
     //Calcul de la distance entre la position de l'utilisateur et chaque bar
     for (Bar* b in bars) {
         CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) b.lat) longitude:((CLLocationDegrees)b.lng)];
-        CLLocationDistance d = [barLocation distanceFromLocation:currentLocation];
+        CLLocationDistance d = [barLocation distanceFromLocation:self.currentLocation];
         b.distance = d;
     }
     
@@ -226,6 +214,7 @@
                                                      @"lat": @"lat",
                                                      @"lng": @"lng",
                                                      @"photos.photo_reference": @"photo",
+                                                     @"icon":@"icon"
                                                     }];
     
     //Création de la réponse configurée avec le mapping
@@ -251,7 +240,7 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   bars = mappingResult.array;
-                                                  self.BeerDegre.text = self.beer.degre;
+                                                  self.BeerDegre.text = [NSString stringWithFormat:@"%@°",self.beer.degre];;
                                                   self.BeerRating.text = self.beer.rating;
                                                   [self sortBarsByDistance];
                                               }
@@ -260,12 +249,11 @@
                                               }];
 }
 
-/*- (void)loadPhoto:(Bar *)bar:(BarCell *)barcell
+- (void)loadPhotoBar:(Bar *)bar:(BarCell *)barcell
 {
     
-    NSString *maxwith= @"150";
     
-    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,bar.photo.firstObject,kKey];
+    NSString *url = [NSString stringWithFormat:@"%@",bar.icon];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request
@@ -279,7 +267,7 @@
     
     [operation start];
     
-}*/
+}
 
 - (void)loadPhoto{
     

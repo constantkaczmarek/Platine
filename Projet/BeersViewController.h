@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "Beer.h"
 #import "Bar.h"
 #ifndef Projet_BeersViewController_h
@@ -14,7 +15,7 @@
 extern const char keyAlert;
 
 
-@interface BeersViewController : UITableViewController <UISearchDisplayDelegate,UISearchControllerDelegate,UISearchBarDelegate>
+@interface BeersViewController : UITableViewController <UISearchDisplayDelegate,UISearchControllerDelegate,UISearchBarDelegate,CLLocationManagerDelegate>
 
 
 @property (nonatomic) bool *AddingBeer;

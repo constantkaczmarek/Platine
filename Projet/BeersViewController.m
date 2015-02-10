@@ -24,6 +24,7 @@
     NSString *beerMode;
     UIActivityIndicatorView *indicator;
     bool isFilt;
+    CLLocationManager* locationManager;
 
 }
 @end
@@ -64,6 +65,10 @@ const char keyAlert;
     }
     
     self.navigationItem.title = @"Bières";
+    
+    //Récupération du location manager des bières
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
     
     //Chargement des bières
     [self configureRestKit];
@@ -133,19 +138,18 @@ const char keyAlert;
     
     //Affectation des champs de la cellule
     cell.BeerNom.text = beer.nom;
-    cell.BeerRating.text= beer.rating;
+    cell.BeerRating.text= beer.type;
     return cell;
 }
 
-/*- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    Beer* beer = [beers objectAtIndex:indexPath.row];
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:beer.nom message:@"Confirmer l'ajout de la bière ? \n\n\n" delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"Oui", nil];
-    
-    objc_setAssociatedObject(alert, &keyAlert, beer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+#pragma mark - Récupération de la localisation précédemment calculé
 
-    [alert show];
-}*/
+
+-(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    //Paramètres de récupération de la position de l'utilisateur
+    locationManager = locations.lastObject;
+}
 
 #pragma mark - Ajout d'une bière à un bar
 - (IBAction)addBar:(id)sender
@@ -244,6 +248,7 @@ const char keyAlert;
                                                      @"infos": @"infos",
                                                      @"rating":@"rating",
                                                      @"degree":@"degre",
+                                                     @"type":@"type",
                                                      @"bars": @"bars",
                                                      }];
     
@@ -284,6 +289,20 @@ const char keyAlert;
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   beers = mappingResult.array;
                                                   [indicator stopAnimating];
+                                                  //Affichage d'aucun résultats disponibles
+                                                  if (!beers){
+                                                      UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                                                      
+                                                      messageLabel.text = @"Aucune données disponibles. Veuillez rééssayer.";
+                                                      messageLabel.textColor = [UIColor blackColor];
+                                                      messageLabel.numberOfLines = 0;
+                                                      messageLabel.textAlignment = NSTextAlignmentCenter;
+                                                      messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+                                                      [messageLabel sizeToFit];
+                                                      
+                                                      self.tableView.backgroundView = messageLabel;
+                                                      self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                                                  }
                                                   [self.BeersList reloadData];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -351,10 +370,14 @@ const char keyAlert;
         
         if(isFilt){
         bvc.beer = [searchResults objectAtIndex:selectedIndex];
+        bvc.currentLocation = locationManager.location;
             self.searchDisplayController.active = NO;
 
         }else{
             bvc.beer = [beers objectAtIndex:selectedIndex];
+            bvc.currentLocation = locationManager.location;
+            bvc.latitude = locationManager.location.coordinate.latitude;
+            bvc.longitude = locationManager.location.coordinate.longitude;
         }
     }
 }

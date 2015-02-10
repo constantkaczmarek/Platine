@@ -31,7 +31,6 @@
     [super viewDidLoad];
   
     self.title = self.bar.nom;
-    //self.title = @"Circus";
     
     //Chargement des bières
     [self configureRestKit];
@@ -61,7 +60,7 @@
     
     //Affectation des informations aux différents composants de la cellule
     cell.BeerNom.text = beer.nom;
-    cell.BeerRating.text = beer.rating;
+    cell.BeerRating.text = beer.type;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadPhoto:beer :cell];
@@ -88,8 +87,12 @@
                                                       @"id": @"id",
                                                       @"name": @"nom",
                                                       @"icon":@"icon",
-                                                      @"rating":@"rating",
+                                                      @"img":@"img",
                                                       @"infos": @"infos",
+                                                      @"rating":@"rating",
+                                                      @"degree":@"degre",
+                                                      @"type":@"type",
+                                                      @"bars": @"bars",
                                                       }];
     
     //Création de la réponse configuré avec le mapping

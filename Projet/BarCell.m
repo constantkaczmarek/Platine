@@ -17,7 +17,7 @@
     [super layoutSubviews];
     
     //Arrondi des images de cellules représentant un bar
-    self.BarImage.layer.cornerRadius = self.BarImage.frame.size.height /2;
+    self.BarImage.layer.cornerRadius = 70 /2;
     self.BarImage.layer.masksToBounds = YES;
     self.BarImage.layer.borderWidth = 0;
 

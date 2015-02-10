@@ -12,7 +12,7 @@
 #import "BarCell.h"
 #import <ActionSheetPicker-3.0/ActionSheetStringPicker.h>
 #import <ActionSheetPicker-3.0/ActionSheetDistancePicker.h>
-#define kKey @"AIzaSyCiKxji5wKw7RDAzKcIWDzTl2eqDv7ilfY"
+#define kKey @"AIzaSyBdijCSg_sMYzgZGmuPpqh4LGz54q4zeJU"
 
 
 @interface BarsViewController()
@@ -69,6 +69,7 @@
     //Recherche par nom désactivée
     byName = false;
     
+
     //Geolocalisation et chargement des bars
     [self configureRestKit];
     locationManager = [[CLLocationManager alloc] init];
@@ -84,8 +85,8 @@
         while (locationManager.location.coordinate.latitude == 0) {
             [locationManager startUpdatingLocation];
         }
-        currentLocation = [[CLLocation alloc] initWithLatitude:50.6353821 longitude:3.0651736];
-    }
+        
+    }else
     
     //Mode recherche
     isFilt = false;
@@ -263,34 +264,12 @@
 
 - (void)sortBarsByDistance
 {
-    
-    //NSString *loc = [NSString stringWithFormat:@"%f,%f",50.6277520,3.0569518];
-    //CLLocation *loc = [[CLLocation alloc]initWithLatitude:50.6277520 longitude:3.0569518];
- 
     //Calcul de la distance entre la position de l'utilisateur et chaque bar
     for (Bar* b in _bars) {
         CLLocation *barLocation = [[CLLocation alloc] initWithLatitude:((CLLocationDegrees) b.lat) longitude:((CLLocationDegrees)b.lng)];
         CLLocationDistance d = [barLocation distanceFromLocation:locationManager.location];
         b.distance = d;
     }
-    
-    /*NSMutableArray *ba = [NSMutableArray arrayWithArray:_bars];
-    
-    Bar *b = [[Bar alloc] init];
-    b.nom = @"Circus";
-    b.distance = 100;
-    b.id = @"ChIJDSF01ITVwkcRRBMkZm-IoeU";
-    
-    [ba addObject:b];
-   
-    
-    Bar *b1 = [[Bar alloc] init];
-    b1.nom = @"Pub Mac Ewan's";
-    b1.distance = 200;
-    b1.id = @"ChIJWzlxLpvVwkcRFYOUkbc7xnU";
-    b.photo = [NSArray arrayWithObjects:@"CnRnAAAAR55VY6-Y4Ww2ETLeD6MloHMBbgSam48WpuD_kK3Kc-Dtf1vk4j4wk6G3QnPFAmI_om8p8cpMAEV5Tdrou_0P_699tdk0yUZSSyKRUnXUT0j7IW3ACQQia6aTVRKyoiMDQ9MzzmkAjwiJ2IZmqD9cyxIQJgaifKpO-YfFJWAup_K9BRoUjZPWBPNsuyVFWdyQZysPG88TYCg", nil] ;
-    
-    [ba addObject:b1];*/
     
     //Tri des bars selon la distance
     NSArray *descriptor = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]];
@@ -361,7 +340,7 @@
     //NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
     
     //Configuration des paramètres selon le mode
-    NSString *loc = [NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude];
+    NSString *loc = [NSString stringWithFormat:@"%f,%f",locationManager.location.coordinate.latitude,locationManager.location.coordinate.longitude];
     NSString *key = kKey;
     NSDictionary *queryParams = nil;
     
@@ -395,7 +374,7 @@
                                                       [self sortBarsByDistance];
                                                   }
                                                   
-                                                  //Création du bouton de recherche par nom si aucun résultats
+                                                  //Affichage d'aucun résultats disponibles
                                                   if (!_bars){
                                                       UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
                                                       

@@ -49,8 +49,10 @@
     
     cell.AvisAuteur.text = avis[@"author_name"];
     cell.AvisTexte.text = avis[@"text"];
-    cell.AvisRating.text = [NSString stringWithFormat:@"%@",avis[@"rating"]];
-    
+    NSString *noteAvis = avis[@"rating"];
+    [cell.AvisNote setStars:noteAvis.intValue callbackBlock:^(NSNumber *newRating)
+     { NSLog(@"didChangeRating: %@",newRating);
+     }];
    
     /*CGFloat rowHeight = [self heightForText:cell.AvisAuteur.text];
     cell.AvisAuteur.frame = CGRectMake(0, 0, 300, rowHeight);*/

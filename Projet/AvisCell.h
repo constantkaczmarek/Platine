@@ -10,6 +10,7 @@
 #define Projet_AvisCell_h
 
 #import <UIKit/UIKit.h>
+#import "DXStarRatingView.h"
 
 @interface AvisCell : UITableViewCell
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *AvisTime;
 @property (weak, nonatomic) IBOutlet UILabel *AvisRating;
 @property (weak, nonatomic) IBOutlet UITextView *AvisTexte;
+@property (weak, nonatomic) IBOutlet DXStarRatingView *AvisNote;
 
 @end
 

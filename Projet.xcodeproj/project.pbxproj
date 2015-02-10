@@ -30,18 +30,20 @@
 		018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018284941A2BC57300DEBB81 /* LaunchScreen.xib */; };
 		018284A21A2BC57300DEBB81 /* ProjetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284A11A2BC57300DEBB81 /* ProjetTests.m */; };
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
-		0187A7BB1A7801AB00546B28 /* Bars.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7B91A7801AB00546B28 /* Bars.png */; };
-		0187A7BC1A7801AC00546B28 /* Beers.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BA1A7801AB00546B28 /* Beers.png */; };
-		0187A7BE1A7802A100546B28 /* Infos.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BD1A7802A100546B28 /* Infos.png */; };
-		0187A7C11A7802DF00546B28 /* Plus plein.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7BF1A7802DF00546B28 /* Plus plein.png */; };
-		0187A7C21A7802DF00546B28 /* Plus vide.png in Resources */ = {isa = PBXBuildFile; fileRef = 0187A7C01A7802DF00546B28 /* Plus vide.png */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
 		0195245B1A7ACE0100918D2A /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0195245A1A7ACE0100918D2A /* View.xib */; };
 		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
-		01CE0BD21A781E3800081728 /* fond_ecran.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01CE0BD11A781E3800081728 /* fond_ecran.jpg */; };
 		01CE0BD61A78201100081728 /* fond_ecran_black.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01CE0BD51A78201100081728 /* fond_ecran_black.jpg */; };
 		01EF02B11A7FA89300762CCA /* Bar_fake.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01EF02B01A7FA89300762CCA /* Bar_fake.jpg */; };
 		01F875691A6662BA003E0267 /* BeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F875681A6662BA003E0267 /* BeerViewController.m */; };
+		EF6B33621A88BD260078E020 /* Plus plein.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B335F1A88BD260078E020 /* Plus plein.png */; };
+		EF6B33631A88BD260078E020 /* Plus vide.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B33601A88BD260078E020 /* Plus vide.png */; };
+		EF6B33641A88BD260078E020 /* Infos.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B33611A88BD260078E020 /* Infos.png */; };
+		EF6B33671A88BD300078E020 /* Bars.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B33651A88BD300078E020 /* Bars.png */; };
+		EF6B33681A88BD300078E020 /* Beers.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B33661A88BD300078E020 /* Beers.png */; };
+		EF6B33811A88E30B0078E020 /* DXStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6B337E1A88E30B0078E020 /* DXStarRatingView.m */; };
+		EF6B33821A88E30B0078E020 /* rating-star-off.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B337F1A88E30B0078E020 /* rating-star-off.png */; };
+		EF6B33831A88E30B0078E020 /* rating-star-on.png in Resources */ = {isa = PBXBuildFile; fileRef = EF6B33801A88E30B0078E020 /* rating-star-on.png */; };
 		EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E41A4035F8006F63D7 /* Beer.m */; };
 		EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF88F5E61A4035F8006F63D7 /* BeersViewController.m */; };
 		F7F9A9549347897B29BBE8B0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498BC474FF25960E63AB2A57 /* libPods.a */; };
@@ -95,17 +97,11 @@
 		018284A11A2BC57300DEBB81 /* ProjetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjetTests.m; sourceTree = "<group>"; };
 		018284AB1A2BC98000DEBB81 /* BarsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarsViewController.h; sourceTree = "<group>"; };
 		018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
-		0187A7B91A7801AB00546B28 /* Bars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bars.png; path = ../../../Downloads/Archive/Bars.png; sourceTree = "<group>"; };
-		0187A7BA1A7801AB00546B28 /* Beers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Beers.png; path = ../../../Downloads/Archive/Beers.png; sourceTree = "<group>"; };
-		0187A7BD1A7802A100546B28 /* Infos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Infos.png; path = ../../../Downloads/Infos.png; sourceTree = "<group>"; };
-		0187A7BF1A7802DF00546B28 /* Plus plein.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Plus plein.png"; path = "../../../Downloads/Archive-2/Plus plein.png"; sourceTree = "<group>"; };
-		0187A7C01A7802DF00546B28 /* Plus vide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Plus vide.png"; path = "../../../Downloads/Archive-2/Plus vide.png"; sourceTree = "<group>"; };
 		019092F11A2F68C3000664C8 /* Bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
 		0195245A1A7ACE0100918D2A /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		0198F1311A38DC2B001A6FFB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		01BE12851A363BEF002E1502 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		01CE0BD11A781E3800081728 /* fond_ecran.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fond_ecran.jpg; path = ../../fond_ecran.jpg; sourceTree = "<group>"; };
 		01CE0BD51A78201100081728 /* fond_ecran_black.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fond_ecran_black.jpg; sourceTree = "<group>"; };
 		01EF02B01A7FA89300762CCA /* Bar_fake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Bar_fake.jpg; sourceTree = "<group>"; };
 		01F875671A666287003E0267 /* BeerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeerViewController.h; sourceTree = "<group>"; };
@@ -113,6 +109,15 @@
 		498BC474FF25960E63AB2A57 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEEA86BDB14D64EAF8CBF4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DFB6789FA62DCB6655CF1FA0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF6B335F1A88BD260078E020 /* Plus plein.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Plus plein.png"; sourceTree = "<group>"; };
+		EF6B33601A88BD260078E020 /* Plus vide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Plus vide.png"; sourceTree = "<group>"; };
+		EF6B33611A88BD260078E020 /* Infos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Infos.png; sourceTree = "<group>"; };
+		EF6B33651A88BD300078E020 /* Bars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bars.png; sourceTree = "<group>"; };
+		EF6B33661A88BD300078E020 /* Beers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Beers.png; sourceTree = "<group>"; };
+		EF6B337D1A88E30B0078E020 /* DXStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXStarRatingView.h; sourceTree = "<group>"; };
+		EF6B337E1A88E30B0078E020 /* DXStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXStarRatingView.m; sourceTree = "<group>"; };
+		EF6B337F1A88E30B0078E020 /* rating-star-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rating-star-off.png"; sourceTree = "<group>"; };
+		EF6B33801A88E30B0078E020 /* rating-star-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rating-star-on.png"; sourceTree = "<group>"; };
 		EF88F5E31A4035F8006F63D7 /* Beer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beer.h; sourceTree = "<group>"; };
 		EF88F5E41A4035F8006F63D7 /* Beer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beer.m; sourceTree = "<group>"; };
 		EF88F5E51A4035F8006F63D7 /* BeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeersViewController.h; sourceTree = "<group>"; };
@@ -165,6 +170,10 @@
 		018284811A2BC57300DEBB81 /* Projet */ = {
 			isa = PBXGroup;
 			children = (
+				EF6B337D1A88E30B0078E020 /* DXStarRatingView.h */,
+				EF6B337E1A88E30B0078E020 /* DXStarRatingView.m */,
+				EF6B337F1A88E30B0078E020 /* rating-star-off.png */,
+				EF6B33801A88E30B0078E020 /* rating-star-on.png */,
 				01CE0BD01A781DBA00081728 /* Image */,
 				01CE0BCF1A781DAC00081728 /* Icon */,
 				EF88F5E31A4035F8006F63D7 /* Beer.h */,
@@ -237,11 +246,11 @@
 		01CE0BCF1A781DAC00081728 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
-				0187A7BF1A7802DF00546B28 /* Plus plein.png */,
-				0187A7C01A7802DF00546B28 /* Plus vide.png */,
-				0187A7BD1A7802A100546B28 /* Infos.png */,
-				0187A7B91A7801AB00546B28 /* Bars.png */,
-				0187A7BA1A7801AB00546B28 /* Beers.png */,
+				EF6B33651A88BD300078E020 /* Bars.png */,
+				EF6B33661A88BD300078E020 /* Beers.png */,
+				EF6B335F1A88BD260078E020 /* Plus plein.png */,
+				EF6B33601A88BD260078E020 /* Plus vide.png */,
+				EF6B33611A88BD260078E020 /* Infos.png */,
 			);
 			name = Icon;
 			sourceTree = "<group>";
@@ -255,7 +264,6 @@
 				01734F5E1A7E61FB00BAF46C /* Rince cochon.jpg */,
 				01734F5C1A7E617600BAF46C /* Leffe blonde.jpg */,
 				01CE0BD51A78201100081728 /* fond_ecran_black.jpg */,
-				01CE0BD11A781E3800081728 /* fond_ecran.jpg */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -364,24 +372,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF6B33821A88E30B0078E020 /* rating-star-off.png in Resources */,
+				EF6B33631A88BD260078E020 /* Plus vide.png in Resources */,
 				012B63F41A34613F002514A1 /* bar_icon.jpg in Resources */,
 				012B63F61A346148002514A1 /* bar.jpg in Resources */,
+				EF6B33671A88BD300078E020 /* Bars.png in Resources */,
+				EF6B33641A88BD260078E020 /* Infos.png in Resources */,
+				EF6B33831A88E30B0078E020 /* rating-star-on.png in Resources */,
+				EF6B33681A88BD300078E020 /* Beers.png in Resources */,
 				018284911A2BC57300DEBB81 /* Main.storyboard in Resources */,
 				01734F5D1A7E617600BAF46C /* Leffe blonde.jpg in Resources */,
-				0187A7BE1A7802A100546B28 /* Infos.png in Resources */,
-				0187A7C21A7802DF00546B28 /* Plus vide.png in Resources */,
 				0195245B1A7ACE0100918D2A /* View.xib in Resources */,
 				01734F611A7E623100BAF46C /* Anosteké.jpg in Resources */,
+				EF6B33621A88BD260078E020 /* Plus plein.png in Resources */,
 				01EF02B11A7FA89300762CCA /* Bar_fake.jpg in Resources */,
 				01271F931A7F6F56002E02C5 /* splashscreen.jpg in Resources */,
-				0187A7BC1A7801AC00546B28 /* Beers.png in Resources */,
 				01CE0BD61A78201100081728 /* fond_ecran_black.jpg in Resources */,
-				0187A7BB1A7801AB00546B28 /* Bars.png in Resources */,
 				018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */,
-				01CE0BD21A781E3800081728 /* fond_ecran.jpg in Resources */,
 				018284931A2BC57300DEBB81 /* Images.xcassets in Resources */,
 				01734F5F1A7E61FB00BAF46C /* Rince cochon.jpg in Resources */,
-				0187A7C11A7802DF00546B28 /* Plus plein.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +445,7 @@
 				0175A6D21A346ED200C1D1CE /* BarCell.m in Sources */,
 				018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */,
 				018284881A2BC57300DEBB81 /* AppDelegate.m in Sources */,
+				EF6B33811A88E30B0078E020 /* DXStarRatingView.m in Sources */,
 				EF88F5E71A4035F8006F63D7 /* Beer.m in Sources */,
 				01690AF81A5C2E2F00761633 /* AvisCell.m in Sources */,
 				EF88F5E81A4035F8006F63D7 /* BeersViewController.m in Sources */,

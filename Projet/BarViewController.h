@@ -13,6 +13,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Bar.h"
+#import "DXStarRatingView.h"
 
 @interface BarViewController : UIViewController <CLLocationManagerDelegate,MKMapViewDelegate>
 {
@@ -35,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *BarAvis;
 @property (weak, nonatomic) IBOutlet UIButton *BarMap;
 @property (weak, nonatomic) IBOutlet UIView *WhiteRect;
+@property (weak, nonatomic) IBOutlet DXStarRatingView *BarNote;
 
 
 @end

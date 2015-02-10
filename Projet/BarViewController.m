@@ -35,10 +35,6 @@
     self.BarImage.image = [UIImage imageNamed:@"Bar_fake.jpg"];
     self.BarDistance.text = [NSString stringWithFormat:@"%.0f m",self.bar.distance];
     
-    //Chargement de la photo du bar
-    [self loadPhoto];
-
-    
     /*
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -106,6 +102,7 @@
                                                      @"opening_hours.weekday_text":@"opening",
                                                      @"opening_hours.open_now":@"open_now",
                                                      @"opening_hours.periods":@"periods",
+                                                     @"photos": @"photo",
                                                      }];
     
     
@@ -133,19 +130,22 @@
                                            parameters:queryParams
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   self.bar = mappingResult.firstObject;
-                                                  
-                                                  //Affectation des informations récupérées aux différents composants de la vue
-                                                  self.BarRating.text =  [NSString stringWithFormat:@"%@ sur %@ avis",self.bar.rating,self.bar.nbrating];
+
+                                                  [self.BarNote setStars:(int)lroundf(self.bar.rating.floatValue) callbackBlock:^(NSNumber *newRating)
+                                                   { NSLog(@"didChangeRating: %@",newRating);
+                                                   }];
                                                   
                                                   [self.BarTelButton setTitle:self.bar.tel forState:UIControlStateNormal];
                                                   [self.BarTelButton addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
                                                   
                                                   [self.BarSiteButton setTitle:self.bar.site forState:UIControlStateNormal];
-                                                  //[self.BarSiteButton setTitle:@"www.circus.com" forState:UIControlStateNormal];
                                                   [self.BarSiteButton addTarget:self action:@selector(openSite:) forControlEvents:UIControlEventTouchUpInside];
                                                   
                                                   [self.BarAdresseButton setTitle:self.bar.address forState:UIControlStateNormal];
                                                   [self.BarAdresseButton addTarget:self action:@selector(openAdresse:) forControlEvents:UIControlEventTouchUpInside];
+                                                  
+                                                  //Chargement de la photo du bar
+                                                  [self loadPhoto];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no bar?': %@", error);
@@ -158,7 +158,7 @@
  
     //Configuration des paramètres de la requête
     NSString *maxwith= @"400";
-    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,self.bar.photo.firstObject,kKey];
+    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&key=%@",maxwith,self.bar.photo.firstObject[@"photo_reference"],kKey];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     //Configuration des réponses de la requête
