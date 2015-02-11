@@ -568,6 +568,33 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0R-eq-cUV">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <state key="normal" image="Home.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="0.0" y="32" width="39" height="39"/>
+                                        </variation>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSE-Yw-ZNo">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <state key="normal" image="Web.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="0.0" y="88" width="39" height="39"/>
+                                        </variation>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYR-zw-95v">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <state key="normal" image="Telephone.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="0.0" y="60" width="39" height="39"/>
+                                        </variation>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -582,11 +609,17 @@
                                     <constraint firstItem="ykS-x0-z7F" firstAttribute="top" secondItem="xq2-fF-NZn" secondAttribute="bottom" constant="34" id="Clr-gf-7LV"/>
                                     <constraint firstItem="WOG-Ab-PB1" firstAttribute="trailing" secondItem="ygM-Hp-Urd" secondAttribute="trailing" id="Jmp-Vf-58X"/>
                                     <constraint firstItem="ygM-Hp-Urd" firstAttribute="leading" secondItem="xq2-fF-NZn" secondAttribute="leading" id="KLD-EU-LAE"/>
-                                    <constraint firstAttribute="trailing" secondItem="WOG-Ab-PB1" secondAttribute="trailing" constant="21" id="KlQ-6r-Afo"/>
-                                    <constraint firstItem="blx-jD-FEI" firstAttribute="leading" secondItem="WOG-Ab-PB1" secondAttribute="leading" id="KsA-25-Car"/>
+                                    <constraint firstAttribute="trailing" secondItem="WOG-Ab-PB1" secondAttribute="trailing" constant="21" id="KlQ-6r-Afo">
+                                        <variation key="widthClass=compact" constant="-17"/>
+                                    </constraint>
+                                    <constraint firstItem="blx-jD-FEI" firstAttribute="leading" secondItem="WOG-Ab-PB1" secondAttribute="leading" id="KsA-25-Car">
+                                        <variation key="widthClass=compact" constant="-38"/>
+                                    </constraint>
                                     <constraint firstItem="WOG-Ab-PB1" firstAttribute="leading" secondItem="xq2-fF-NZn" secondAttribute="leading" id="Lt8-0t-9w5"/>
                                     <constraint firstItem="yeC-Jv-mHu" firstAttribute="trailing" secondItem="gw0-25-z3M" secondAttribute="trailingMargin" id="N89-48-h67"/>
-                                    <constraint firstItem="xq2-fF-NZn" firstAttribute="leading" secondItem="gw0-25-z3M" secondAttribute="leadingMargin" id="NRx-m0-yeG"/>
+                                    <constraint firstItem="xq2-fF-NZn" firstAttribute="leading" secondItem="gw0-25-z3M" secondAttribute="leadingMargin" id="NRx-m0-yeG">
+                                        <variation key="widthClass=compact" constant="38"/>
+                                    </constraint>
                                     <constraint firstItem="WOG-Ab-PB1" firstAttribute="top" secondItem="blx-jD-FEI" secondAttribute="bottom" constant="8" symbolic="YES" id="Rwv-6w-Whw"/>
                                     <constraint firstItem="ykS-x0-z7F" firstAttribute="leading" secondItem="gw0-25-z3M" secondAttribute="leading" id="a6H-fY-bV8"/>
                                     <constraint firstItem="blx-jD-FEI" firstAttribute="top" secondItem="pJM-v5-T4B" secondAttribute="bottom" constant="7" id="dnP-Yd-9MG"/>
@@ -606,6 +639,9 @@
                                         <exclude reference="xq2-fF-NZn"/>
                                         <exclude reference="ygM-Hp-Urd"/>
                                         <exclude reference="yeC-Jv-mHu"/>
+                                        <exclude reference="a0R-eq-cUV"/>
+                                        <exclude reference="bSE-Yw-ZNo"/>
+                                        <exclude reference="oYR-zw-95v"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="Jmp-Vf-58X"/>
@@ -642,6 +678,9 @@
                                         <include reference="xq2-fF-NZn"/>
                                         <include reference="ygM-Hp-Urd"/>
                                         <include reference="yeC-Jv-mHu"/>
+                                        <include reference="a0R-eq-cUV"/>
+                                        <include reference="bSE-Yw-ZNo"/>
+                                        <include reference="oYR-zw-95v"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="Jmp-Vf-58X"/>
@@ -2105,8 +2144,11 @@
     <resources>
         <image name="Bars.png" width="48" height="48"/>
         <image name="Beers.png" width="48" height="48"/>
+        <image name="Home.png" width="128" height="128"/>
         <image name="Infos.png" width="48" height="48"/>
         <image name="Plus vide.png" width="48" height="48"/>
+        <image name="Telephone.png" width="128" height="128"/>
+        <image name="Web.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yl7-nl-gGj"/>

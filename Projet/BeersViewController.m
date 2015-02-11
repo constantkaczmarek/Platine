@@ -308,6 +308,19 @@ const char keyAlert;
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"What do you mean by 'there is no beers?': %@", error);
                                                   [indicator stopAnimating];
+                                                      UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                                                      
+                                                      messageLabel.text = @"Aucune données disponibles. Veuillez rééssayer.";
+                                                      messageLabel.textColor = [UIColor blackColor];
+                                                      messageLabel.numberOfLines = 0;
+                                                      messageLabel.textAlignment = NSTextAlignmentCenter;
+                                                      messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+                                                      [messageLabel sizeToFit];
+                                                      
+                                                      self.tableView.backgroundView = messageLabel;
+                                                      self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                                                
+
                                               }];
     
 }

@@ -30,6 +30,9 @@
 		018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018284941A2BC57300DEBB81 /* LaunchScreen.xib */; };
 		018284A21A2BC57300DEBB81 /* ProjetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284A11A2BC57300DEBB81 /* ProjetTests.m */; };
 		018284AD1A2BC9DF00DEBB81 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */; };
+		0189FD4D1A8AB4C0008E9BE9 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 0189FD4C1A8AB4C0008E9BE9 /* Home.png */; };
+		0189FD4F1A8AB4C6008E9BE9 /* Telephone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0189FD4E1A8AB4C6008E9BE9 /* Telephone.png */; };
+		0189FD511A8AB4CC008E9BE9 /* Web.png in Resources */ = {isa = PBXBuildFile; fileRef = 0189FD501A8AB4CC008E9BE9 /* Web.png */; };
 		019092F31A2F68D7000664C8 /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 019092F21A2F68D7000664C8 /* Bar.m */; };
 		0195245B1A7ACE0100918D2A /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0195245A1A7ACE0100918D2A /* View.xib */; };
 		0198F1321A38DC2B001A6FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198F1311A38DC2B001A6FFB /* UIKit.framework */; };
@@ -97,6 +100,9 @@
 		018284A11A2BC57300DEBB81 /* ProjetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjetTests.m; sourceTree = "<group>"; };
 		018284AB1A2BC98000DEBB81 /* BarsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarsViewController.h; sourceTree = "<group>"; };
 		018284AC1A2BC9DF00DEBB81 /* BarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
+		0189FD4C1A8AB4C0008E9BE9 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
+		0189FD4E1A8AB4C6008E9BE9 /* Telephone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Telephone.png; sourceTree = "<group>"; };
+		0189FD501A8AB4CC008E9BE9 /* Web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Web.png; sourceTree = "<group>"; };
 		019092F11A2F68C3000664C8 /* Bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		019092F21A2F68D7000664C8 /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bar.m; sourceTree = "<group>"; };
 		0195245A1A7ACE0100918D2A /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
@@ -246,6 +252,9 @@
 		01CE0BCF1A781DAC00081728 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
+				0189FD501A8AB4CC008E9BE9 /* Web.png */,
+				0189FD4E1A8AB4C6008E9BE9 /* Telephone.png */,
+				0189FD4C1A8AB4C0008E9BE9 /* Home.png */,
 				EF6B33651A88BD300078E020 /* Bars.png */,
 				EF6B33661A88BD300078E020 /* Beers.png */,
 				EF6B335F1A88BD260078E020 /* Plus plein.png */,
@@ -381,6 +390,7 @@
 				EF6B33831A88E30B0078E020 /* rating-star-on.png in Resources */,
 				EF6B33681A88BD300078E020 /* Beers.png in Resources */,
 				018284911A2BC57300DEBB81 /* Main.storyboard in Resources */,
+				0189FD4D1A8AB4C0008E9BE9 /* Home.png in Resources */,
 				01734F5D1A7E617600BAF46C /* Leffe blonde.jpg in Resources */,
 				0195245B1A7ACE0100918D2A /* View.xib in Resources */,
 				01734F611A7E623100BAF46C /* Anosteké.jpg in Resources */,
@@ -391,6 +401,8 @@
 				018284961A2BC57300DEBB81 /* LaunchScreen.xib in Resources */,
 				018284931A2BC57300DEBB81 /* Images.xcassets in Resources */,
 				01734F5F1A7E61FB00BAF46C /* Rince cochon.jpg in Resources */,
+				0189FD4F1A8AB4C6008E9BE9 /* Telephone.png in Resources */,
+				0189FD511A8AB4CC008E9BE9 /* Web.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

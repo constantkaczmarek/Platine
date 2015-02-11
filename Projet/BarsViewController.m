@@ -158,8 +158,9 @@
     if(tableView == self.searchDisplayController.searchResultsTableView) {
         
         //Création du bouton de recherche de bar par nom si aucun résultats
+        UIButton *button = nil;
         if(searchResults.count == 0){
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             [button addTarget:self
                        action:@selector(searchNameBar:)
              forControlEvents:UIControlEventTouchUpInside];
@@ -168,12 +169,15 @@
             button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
             self.searchDisplayController.searchResultsTableView.backgroundView = button;
             self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }else{
+            [button removeFromSuperview];
         }
         
         isFilt=true;
         return searchResults.count;
     } else {
         isFilt=false;
+        NSLog([NSString stringWithFormat:@"%d",_bars.count]);
         return _bars.count;
     }
 }
